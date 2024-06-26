@@ -1,25 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="/html/css/terminal.css" />
-    <script src="/html/js/terminal.js"></script>
-    <style>
-      #terminal {
-        width: 80%;
-        height: 400px;
-        margin: 20px auto;
-        border: 1px solid #000;
-      }
-    </style>
+    <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="html/css/terminal.css" />
+    <script src="node_modules/xterm/lib/xterm.js"></script>
   </head>
   <body>
     <div id="terminal"></div>
-    <script>
-      document.addEventListener('DOMContentLoaded', (event) => {
-        var term = new Terminal();
-        term.open(document.getElementById('terminal'));
-        term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
-      });
-    </script>
+    <script src="html/js/terminal.js"></script>
   </body>
 </html>
