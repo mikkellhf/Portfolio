@@ -1,1 +1,10 @@
-
+#terminal {
+    width: 80%;
+    height: 400px;
+    margin: 20px auto;
+    border: 1px solid #000;
+    font-family: monospace;
+    background-color: #000;
+    color: #fff;
+  }
+  
