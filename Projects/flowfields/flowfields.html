@@ -3,15 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Field</title>
-    <link rel = "stylesheet" href = "style.css" />
+    <title>Moving Flow Field</title>
+    <link rel="stylesheet" href="../flowfields/style.css" />
 </head>
 <body>
-    <canvas id="myCanvas"></canvas>
-    <button id="increaseButtonZoom">Increase</button>
-    <button id="decreaseButtonZoom">Decrease</button>
-    <button id="increaseButtonCurve">Increase</button>
-    <button id="decreaseButtonCurve">Decrease</button>
-    <script type="module" src="efficient_flowfield.js"></script>
+    <div class="canvas-container">
+        <canvas id="myCanvas"></canvas>
+    </div>
+    <div class="controls">
+        <button id="increaseButtonZoom">Increase Zoom</button>
+        <button id="decreaseButtonZoom">Decrease Zoom</button>
+        <button id="increaseButtonCurve">Increase Curve</button>
+        <button id="decreaseButtonCurve">Decrease Curve</button>
+
+        <label for="numParticles"></label>
+        <input type="number" id="numParticles" value="1000" min="1">
+
+        <button id="updateParticles">Update Particles</button>
+        <button onclick="loadScript('simple_flowfield.js')">Simple Flowfield</button>
+        <button onclick="loadScript('flowfield.js')">Flowfield</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+    </div>
+    <script> // Function to dynamically load a JavaScript file
+        function loadScript(scriptName) {
+            const existingScript = document.getElementById('flowfield-script');
+            console.log(existingScript);
+            // If there's already a script, remove it
+            if (existingScript) {
+                const currentScriptName = existingScript.src.split('/').pop(); // Extract the filename
+
+                if (scriptName === currentScriptName) {
+                    console.log("Same script");
+                    return; // If the script is already loaded, do nothing
+                }
+                existingScript.remove(); // Remove the existing script
+
+            }
+
+            // Create a new script element
+            const script = document.createElement('script');
+            script.src = scriptName;
+            script.id = 'flowfield-script';
+            document.body.appendChild(script); // Add the script to the body
+        }
+
+    // Run on window load
+    window.onload = () => {
+        loadScript('flowfield.js'); // Load the default script on load
+    };
+
+    </script>
 </body>
 </html>

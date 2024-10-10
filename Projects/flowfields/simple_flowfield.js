@@ -1,159 +1,155 @@
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
-const n_particles = 3000;
-const root = document.documentElement;
+(function() {
+    // Initialize SimplexNoise instance
+    const simplex = new SimplexNoise();
 
-canvas.width = 500;
-canvas.height = 500;
+    // Initialize variables
+    let flowfield;
+    let rows = 75; // Example row size
+    let cols = 75; // Example column size
+    let noiseScale = 5; // Scale for Simplex noise
+    let time = 0.1; // Variable to drive movement
+    let particles = []; // Array to hold particles
+    let n_particles = 1000; // Default number of particles
+    let canvas;
+    let ctx;
 
-// Canvas settings
-ctx.fillStyle = 'white';
-ctx.strokeStyle = 'white';
-ctx.lineWidth = 1;
+    // Set up the canvas
+    function setup() {
+        canvas = document.getElementById('myCanvas');
+        ctx = canvas.getContext('2d');
+        canvas.width = 500;
+        canvas.height = 500;
 
-class Particle {
-    constructor(effect) {
-        this.effect = effect;
-        this.reset();
-        this.speedModifier = Math.random() * 5 + 1;
-        this.history = [{ x: this.x, y: this.y }];
-        this.maxLength = Math.random() * 15 + 10;
-        this.timer = this.maxLength * 2;
-        this.colors = getComputedStyle(root).getPropertyValue('--colors2').trim().split(', ');
-        this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
-        this.angle = 0;
-        this.speedX = 0;
-        this.speedY = 0;
+        flowfield = new Array(rows + 1).fill(0).map(() => new Array(cols + 1).fill(0));
+
+        // Initialize particles
+        updateParticles();
     }
 
-    draw(context) {
-        context.beginPath();
-        context.moveTo(this.history[0].x, this.history[0].y);
-        for (const point of this.history) {
-            context.lineTo(point.x, point.y);
-        }
-        context.strokeStyle = this.color;
-        context.stroke();
-    }
+    // Function to update particles based on input
+    function updateParticles() {
+        const numParticlesInput = document.getElementById('numParticles');
+        n_particles = parseInt(numParticlesInput.value) || 1000; // Get value from input
+        particles = []; // Clear existing particles
 
-    update() {
-        if (--this.timer > 0) {
-            // Calculate grid position
-            const x = (this.x / this.effect.cellSize) | 0; // Use bitwise OR for quick flooring
-            const y = (this.y / this.effect.cellSize) | 0;
-            const index = y * this.effect.cols + x;
-            this.angle = this.effect.flowField[index];
-
-            // Update speed based on flow field angle
-            this.speedX = Math.cos(this.angle);
-            this.speedY = Math.sin(this.angle);
-
-            this.x += this.speedX * this.speedModifier;
-            this.y += this.speedY * this.speedModifier;
-
-            // Update history
-            this.history.push({ x: this.x, y: this.y });
-            if (this.history.length > this.maxLength) this.history.shift();
-        } else if (this.history.length > 1) {
-            this.history.shift();
-        } else {
-            this.reset();
+        for (let i = 0; i < n_particles; i++) {
+            particles.push(new Particle());
         }
     }
 
-    reset() {
-        this.x = Math.random() * this.effect.width | 0; // Use bitwise OR for quick flooring
-        this.y = Math.random() * this.effect.height | 0;
-        this.history = [{ x: this.x, y: this.y }];
-        this.timer = this.maxLength * 2;
-    }
-}
-
-class Effect {
-    constructor(width, height, n) {
-        this.width = width;
-        this.height = height;
-        this.cellSize = 20; // Make the cell size larger for lower computational overhead
-        this.particles = Array.from({ length: n }, () => new Particle(this));
-        this.curve = 5;
-        this.zoom = 0.001;
-        this.debug = false;
-        this.rows = 0;
-        this.cols = 0;
-        this.flowField = [];
-        this.updateFlowField();
-
-        window.addEventListener('keydown', e => {
-            if (e.key === 'd') this.debug = !this.debug;
-        });
-
-        this.setupEventListeners();
-    }
-
-    updateFlowField() {
-        this.flowField = [];
-        this.rows = Math.floor(this.height / this.cellSize);
-        this.cols = Math.floor(this.width / this.cellSize);
-
-        for (let y = 0; y < this.rows; y++) {
-            for (let x = 0; x < this.cols; x++) {
-                const angle = (Math.cos(x * this.zoom) + Math.sin(y * this.zoom)) * this.curve;
-                this.flowField.push(angle);
+    // Generate flow field based on Simplex noise
+    function generateFlowField() {
+        for (let i = 0; i < rows + 1; i++) {
+            for (let j = 0; j < cols + 1; j++) {
+                 // Randomness over time
+                flowfield[i][j] = noise(i * noiseScale, j * noiseScale, time) * Math.PI * 2;
             }
         }
     }
 
-    drawGrid(context) {
-        context.save();
-        context.strokeStyle = 'red';
-        context.lineWidth = 0.3;
+    // Main draw function
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
-        for (let c = 0; c < this.cols; c++) {
-            context.beginPath();
-            context.moveTo(this.cellSize * c, 0);
-            context.lineTo(this.cellSize * c, this.height);
-            context.stroke();
+        generateFlowField(); // Re-generate the flow field to create movement
+        time += 0.01; // Increment time to create the motion effect
+
+        // Draw the flow lines
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                let angle = flowfield[i][j];
+                let x = j * (canvas.width / cols);
+                let y = i * (canvas.height / rows);
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.strokeStyle = 'black';
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(canvas.width / cols / 2, 0); // Draw a line that shows the flow
+                ctx.stroke();
+                ctx.restore();
+            }
         }
 
-        for (let r = 0; r < this.rows; r++) {
-            context.beginPath();
-            context.moveTo(0, this.cellSize * r);
-            context.lineTo(this.width, this.cellSize * r);
-            context.stroke();
-        }
-
-        context.restore();
-    }
-
-    render(context) {
-        if (this.debug) this.drawGrid(context);
-        for (const particle of this.particles) {
-            particle.draw(context);
+        // Update and display particles
+        for (let particle of particles) {
             particle.update();
+            particle.display();
+        }
+
+        requestAnimationFrame(draw); // Request the next frame
+    }
+
+    // Particle class definition
+    class Particle {
+        constructor() {
+            this.position = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+            this.velocity = { x: 0, y: 0 };
+            this.acceleration = { x: 0, y: 0 };
+            this.force = 1; // Magnitude of movement
+        }
+
+        update() {
+            let x = Math.floor(this.position.x / (canvas.width / cols));
+            let y = Math.floor(this.position.y / (canvas.height / rows));
+
+            // Ensure particle is within bounds of flowfield
+            if (x >= 0 && x < cols && y >= 0 && y < rows) {
+                let angle = flowfield[y][x]; // Get flow field angle at particle position
+                this.acceleration = {
+                    x: Math.cos(angle) * this.force,
+                    y: Math.sin(angle) * this.force,
+                }; // Create a vector from the angle
+
+                this.velocity.x += this.acceleration.x;
+                this.velocity.y += this.acceleration.y;
+
+                // Limit speed
+                const speedLimit = 2;
+                const speed = Math.sqrt(this.velocity.x ** 2 + this.velocity.y ** 2);
+                if (speed > speedLimit) {
+                    this.velocity.x = (this.velocity.x / speed) * speedLimit;
+                    this.velocity.y = (this.velocity.y / speed) * speedLimit;
+                }
+
+                this.position.x += this.velocity.x; // Update position
+                this.position.y += this.velocity.y;
+            }
+
+            // Check if the particle is out of bounds and respawn if it is
+            if (this.position.x > canvas.width || this.position.x < 0 ||
+                this.position.y > canvas.height || this.position.y < 0) {
+                this.position.x = Math.random() * canvas.width; // Respawn at a random position
+                this.position.y = Math.random() * canvas.height; // Respawn at a random position
+            }
+        }
+
+        display() {
+            ctx.fillStyle = 'rgba(0, 100, 100, 0.5)';
+            ctx.strokeStyle = 'rgba(0, 100, 100, 0.5)';
+            ctx.beginPath();
+            ctx.arc(this.position.x, this.position.y, 5, 0, Math.PI * 2); // Draw the particle
+            ctx.fill();
+            ctx.stroke();
         }
     }
 
-    setupEventListeners() {
-        const handlers = {
-            increaseZoom: () => { this.zoom += 0.001; this.updateFlowField(); },
-            decreaseZoom: () => { this.zoom = Math.max(0.001, this.zoom - 0.001); this.updateFlowField(); },
-            increaseCurve: () => { this.curve += 0.1; this.updateFlowField(); },
-            decreaseCurve: () => { this.curve = Math.max(0.1, this.curve - 0.1); this.updateFlowField(); }
-        };
-
-        document.getElementById('increaseButtonZoom').addEventListener('click', handlers.increaseZoom);
-        document.getElementById('decreaseButtonZoom').addEventListener('click', handlers.decreaseZoom);
-        document.getElementById('increaseButtonCurve').addEventListener('click', handlers.increaseCurve);
-        document.getElementById('decreaseButtonCurve').addEventListener('click', handlers.decreaseCurve);
+    // Noise function using SimplexNoise
+    function noise(x, y, z) {
+        return simplex.noise3D(x, y, z); // Use the 3D noise function
     }
-}
 
-const effect = new Effect(canvas.width, canvas.height, n_particles);
+    // Event listener for updating particles
+    document.getElementById('updateParticles').addEventListener('click', updateParticles);
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    effect.render(ctx);
-    requestAnimationFrame(animate);
-}
+    // Ensure canvas resizes when the window is resized
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth * 0.5;
+        canvas.height = window.innerHeight * 0.5;
+    });
 
-animate();
+    // Start the sketch
+    setup();
+    draw();
+})();

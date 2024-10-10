@@ -1,41 +1,38 @@
-body {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #333;
-    color: #fff;
+    background-color: #f0f0f0; /* Optional: Light background color */
+}
+
+.canvas-container {
+    position: relative; /* Allows positioning of canvas */
+    width: 500px; /* Set a fixed width for the canvas */
+    height: 500px; /* Set a fixed height for the canvas */
 }
 
 canvas {
-    border: 1px solid #888;
-    margin-bottom: 20px;
-    max-width: 50vw; /* Ensure the canvas doesn't exceed 50% of the viewport width */
-    max-height: 50vh; /* Ensure the canvas doesn't exceed 50% of the viewport height */
-    width: 100%; /* Allow the canvas to be responsive within the max limits */
-    height: 100%; /* Allow the canvas to be responsive within the max limits */
+    display: block; /* Remove inline space under canvas */
+    background-color: white; /* Optional: Background color for the canvas */
 }
 
 .controls {
-    display: flex;
-    gap: 10px;
+    position: absolute; /* Position controls on top of the canvas */
+    top: 10px; /* Distance from the top */
+    left: 10px; /* Distance from the left */
+    z-index: 1; /* Bring controls to the front */
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
+    padding: 10px; /* Optional: Padding for better touch targets */
+    border-radius: 5px; /* Optional: Rounded corners */
 }
 
-.controls button {
-    padding: 10px 20px;
-    background-color: #555;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.controls button:hover {
-    background-color: #777;
-}
 :root {
     --colors1: #f72585, #b5179e, #7209b7, #560bad, #480ca8, #3a0ca3, #3f37c9, #4361ee, #4895ef, #ffffff;
     --colors2: #4c026b, #730d9e, #9622c7, #b44ae0, #cd72f2, #e599f7, #f6c1fa, #f9e8fb, #ffffff;

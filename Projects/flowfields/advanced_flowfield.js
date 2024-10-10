@@ -20,7 +20,7 @@ class Particle {
         this.y = Math.floor(Math.random() * this.effect.height);    
         this.speedX;
         this.speedY;    
-        this.speedModifier = Math.floor(Math.random() * 1 + 1);
+        this.speedModifier = Math.floor(Math.random() + 1);
         this.history = [{x: this.x, y: this.y}];
         this.maxLength = Math.floor(Math.random() * 10 + 5);
         this.angle = 0;
@@ -116,10 +116,7 @@ class Effect {
 
         this.init();
 
-        window.addEventListener('keydown', e => {
-            console.log(e);
-            if (e.key === 'd') this.debug = !this.debug;
-        });
+
         window.addEventListener('resize', e => {
 
         })
