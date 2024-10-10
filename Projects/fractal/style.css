@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}   
+
+canvas {
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top:50%;
+    left:40%;
+    transform: translate(-50%,-50%);
+
+}
+form {
+    position: absolute;
+    justify-content: right;
+    align-items: left;
+    right: 5%;
+}
+
+button {
+    position: absolute;
+    justify-content: right;
+    align-items: left;
+    right: 5%;
+    top: 10%
+}
+
+input[type="color"] {
+    appearance: none;
+    border:black 1px;
+    padding:0;
+    height: 30px;
+    width:30px;
+    background:white;
+    margin: none;
+}
+
+
+:root {
+    --snowflake: 10, 100, 5, 0.5, 0.8, 2;
+
+}

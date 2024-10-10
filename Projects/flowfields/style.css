@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+canvas {
+    background-color: black;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+
+}
+:root {
+    --colors1: #f72585, #b5179e, #7209b7, #560bad, #480ca8, #3a0ca3, #3f37c9, #4361ee, #4895ef, #ffffff;
+    --colors2: #4c026b, #730d9e, #9622c7, #b44ae0, #cd72f2, #e599f7, #f6c1fa, #f9e8fb, #ffffff;
+    --colors_Sienna_yellow: #f8cf20, #f7d94c, #f6e178, #f5ea9f, #f4f2c6, #f3f9ed, #ffffff;
+
+}

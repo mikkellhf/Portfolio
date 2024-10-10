@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal</title>
+    <link rel = "stylesheet" href = "style.css" />
+    
+</head>
+<body>
+    <form autocomplete="off", id="settings-form">
+         
+        <div>
+            <label for="#Colors">Color gradient:</label><br>
+        </div>
+            <input type="color" id="c1" name="c1" value="#000000" size = "1">
+            <input type="color" id="c2" name="c2" value="#000000" size = "1">
+           
+        <br> 
+        <div>
+            <label for="Sides">Sides:</label><br>
+            <input type="text" id="Sides" name="Sides">
+        </div><br>
+        
+        <div>
+            <label for="Size">Size:</label><br>
+            <input type="text" id="Size" name="Size">
+        </div><br>
+        
+        <div>
+            <label for="Depth">Depth:</label><br>
+            <input type="text" id="Depth" name="Depth">
+        </div><br>
+    
+        <div>
+            <label for="Scale">Scale:</label><br>
+            <input type="text" id="Scale" name="Scale">
+        </div><br>
+    
+        <div>
+            <label for="Spread">Spread:</label><br>
+            <input type="text" id="Spread" name="Spread">
+        </div><br>
+    
+        <div>
+            <label for="Branches">Branches:</label><br>
+            <input type="text" id="Branches" name="Branches">
+        </div><br>
+
+        
+    
+        <input type="submit" value="Apply Settings">
+    </form>
+    <canvas id="fractal"></canvas>
+    <script src="fractals.js"></script>
+
+</body>
+</html>
