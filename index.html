@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Terminal</title>
+    <link rel="stylesheet" href="index_style.css">
+</head>
+<body>
+    <div id="terminal">
+        <div id="output-container">
+            <div id="initial-message">
+                <p>Welcome to My Web Terminal</p>
+                <p>========================</p>
+                <p>Available Commands:</p>
+                <p>help - Display this help message</p>
+                <p>greet - Display a greeting message</p>
+                <p>date - Show current date and time</p>
+                <p>projects - Displays a list of current projects</p>
+                <p>clear - Clears the terminal</p>
+                <br>
+            </div>
+        </div>
+        <div id="input-container">
+            <span id="cursor">></span>
+            <label for="input"></label><input type="text" id="input" autocomplete="off" name="fake-name-field" autofocus>
+        </div>
+    </div>
+    <script src="index_script.js"></script>
+</body>
+</html>

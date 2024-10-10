@@ -1,0 +1,74 @@
+body {
+    font-family: monospace;
+    background-color: #2e2e2e;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Hide entire page scrollbars */
+}
+
+#terminal {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: 1px solid #555;
+    padding: 10px;
+    width: 600px;
+    height: 30vh;
+    background-color: #1e1e1e;
+    cursor: text;
+    resize: both;  /* Allow resizing by the user in both directions */
+    overflow: hidden;  /* Hide the scrollbars to keep the clean look */
+}
+
+#input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#cursor {
+    position: absolute;
+    left: 0;
+    animation: blink 1s step-start infinite;
+    user-select: none;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+#input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+    font-family: inherit;
+    caret-color: transparent; /* Hide default caret */
+    padding-left: 10px; /* Padding to align text with cursor */
+}
+
+#output-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+}
+
+#output-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in webkit-based browsers */
+}
+
+#output-container {
+    -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+    scrollbar-width: none;     /* Hide scrollbar in Firefox */
+    padding-right: 10px; /* Space for text alignment without visual scrollbar */
+}
+
+.highlight {
+    background-color: #444;
+    width: 100%;
+}
