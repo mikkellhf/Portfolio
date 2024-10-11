@@ -3,15 +3,35 @@ const terminalElement = document.getElementById('terminal');
 const outputContainer = document.getElementById('output-container');
 const initialMessage = document.getElementById('initial-message');
 
+
 let commandHistory = [];
 let currentCommandIndex = -1;
 let projectsList = ['flowfields'];
 
+// Ensure projects are loaded before any command handling
+window.addEventListener('load', async () => {
+    displayMessage(displayWelcome());
+});
 
+function displayMessage(message) {
+    const resultNode = document.createElement('p');
+    resultNode.innerHTML = message.replace(/\n/g, '<br>');
+    outputContainer.appendChild(resultNode);
+    inputElement.value = '';
+    scrollToBottom(); // Scroll to the bottom of the terminal
+}
+
+function displayWelcome() {
+    return`
+Welcome to My Web Terminal
+========================
+This is the terminal for Mikkel Frandsen's projects
+help      - Display the help message
+`
+}
 
 function displayHelp() {
     return `
-> help
 Help - Available Commands
 =========================
 help      - Display this help message
@@ -30,14 +50,12 @@ function handleCommand(command) {
                 break;
             case 'greet':
                 resolve(`
-> ${command}
 Hello! Hope you're having a great day!
                 `);
                 break;
             case 'date':
                 const date = new Date().toString();
                 resolve(`
-> ${command}
 ${date}
                 `);
                 break;
@@ -52,10 +70,10 @@ ${date}
                 if (projectsList.some(project => project.toLowerCase() === command.toLowerCase())) {
                     const matchedProject = projectsList.find(
                         project => project.toLowerCase() === command.toLowerCase());
+                    //Note that if run locally, this should be '/Portfolio/', however for GitHub Pages, it should be 'Portfolio/'
                     window.location.href = `/Portfolio/Projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
                 } else {
                     resolve(`
-> ${command}
 Unknown command: ${command}
                     `);
                 }
@@ -78,7 +96,6 @@ function clearTerminal() {
 
 async function fetchProjects() {
     return `
-> projects
 Here are my current projects:
 ${projectsList.map(project => `    ${project}`).join('\n')}
     `;
@@ -96,11 +113,8 @@ inputElement.addEventListener('keydown', function(event) {
 
         handleCommand(command).then((result) => {
             if (result !== '') {
-                const resultNode = document.createElement('p');
-                resultNode.innerHTML = result.replace(/\n/g, '<br>');
-                outputContainer.appendChild(resultNode);
-                inputElement.value = '';
-                scrollToBottom(); // Scroll to the bottom of the terminal
+                result = `> ${command}` + result
+                displayMessage(result)
             }
         });
     } else if (event.key === 'ArrowUp') {
