@@ -78,7 +78,7 @@ class Effect {
         this.cellSize = 20; // Cell size for flow field
         this.particles = Array.from({ length: numberOfParticles }, () => new Particle(this));
         this.curve = 5; // Curve modifier for flow field
-        this.zoom = 0.001; // Zoom level for flow field
+        this.zoom = parseFloat(document.getElementById('zoomInput').value) || 0.001;
         this.debug = false; // Debug mode
         this.rows = 0;
         this.cols = 0;
@@ -147,6 +147,10 @@ class Effect {
             this.zoom = Math.max(0.001, this.zoom + 0.001);
             this.updateFlowField();
         });
+
+        document.getElementById('zoomInput').addEventListener('input', () => {
+            this.zoom = parseFloat(document.getElementById('zoomInput').value) || 0.001;
+        })
 
         document.getElementById('decreaseButtonZoom').addEventListener('click', () => {
             this.zoom = Math.max(0.001, this.zoom - 0.001);
