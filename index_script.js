@@ -7,8 +7,6 @@ let commandHistory = [];
 let currentCommandIndex = -1;
 let projectsList = ['flowfields'];
 
-// Ensure projects are loaded before any command handling
-
 
 
 function displayHelp() {
