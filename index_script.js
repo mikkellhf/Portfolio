@@ -5,19 +5,16 @@ const initialMessage = document.getElementById('initial-message');
 
 let commandHistory = [];
 let currentCommandIndex = -1;
-let projectsList = ['flowfields'];
+let projectsList = [];
 
 // Ensure projects are loaded before any command handling
 window.addEventListener('load', async () => {
-    //projectsList = await generateProjectList();
+    projectsList = await generateProjectList();
 });
 
 async function generateProjectList() {
     const response = await fetch('/projects/projects.txt');
-
     const projects = await response.text();
-    console.log(projects)
-
     return projects.split('\n')
         .map(project => project.trim())
         .filter(project => project);
@@ -66,7 +63,7 @@ ${date}
                 if (projectsList.some(project => project.toLowerCase() === command.toLowerCase())) {
                     const matchedProject = projectsList.find(
                         project => project.toLowerCase() === command.toLowerCase());
-                    window.location.href = `Portfolio/Projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
+                    window.location.href = `/Portfolio/Projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
                 } else {
                     resolve(`
 > ${command}
