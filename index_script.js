@@ -66,7 +66,7 @@ ${date}
                 if (projectsList.some(project => project.toLowerCase() === command.toLowerCase())) {
                     const matchedProject = projectsList.find(
                         project => project.toLowerCase() === command.toLowerCase());
-                    window.location.href = `/projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
+                    window.location.href = `Portfolio/projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
                 } else {
                     resolve(`
 > ${command}
