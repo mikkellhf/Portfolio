@@ -5,20 +5,11 @@ const initialMessage = document.getElementById('initial-message');
 
 let commandHistory = [];
 let currentCommandIndex = -1;
-let projectsList = [];
+let projectsList = ['flowfields'];
 
 // Ensure projects are loaded before any command handling
-window.addEventListener('load', async () => {
-    projectsList = await generateProjectList();
-});
 
-async function generateProjectList() {
-    const response = await fetch('/projects/projects.txt');
-    const projects = await response.text();
-    return projects.split('\n')
-        .map(project => project.trim())
-        .filter(project => project);
-}
+
 
 function displayHelp() {
     return `
