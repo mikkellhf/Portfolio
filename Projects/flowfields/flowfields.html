@@ -4,30 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moving Flow Field</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/button.css" />
+    <link rel="stylesheet" href="css/canvas.css" />
+    <link rel="stylesheet" href="css/input.css" />
+    <link rel="stylesheet" href="css/controls.css" />
+    <link rel="stylesheet" href="css/description.css" />
 </head>
 <body>
-    <div class="canvas-container">
-        <canvas id="myCanvas"></canvas>
+
+
+    <div class="canvas-container" id="canvas_container_id">
+        <canvas id="myCanvas" ></canvas>
+    </div>
+    <div class="script_controls">
+        <button class="button-59" role="button" onclick="loadScript('js/simple_flowfield.js')">Underlying Flowfield</button>
+        <button class="button-59" role="button" onclick="loadScript('js/flowfield.js')">Flowfield</button>
     </div>
     <div class="controls">
-        <button id="increaseButtonZoom">Increase Zoom</button>
-        <button id="decreaseButtonZoom">Decrease Zoom</button>
-
-        <input type="number" id="zoomInput" value="1" min="0.1" max="10"></input>
-        <button id="increaseButtonCurve">Increase Curve</button>
-        <button id="decreaseButtonCurve">Decrease Curve</button>
-
-        <label for="numParticles"></label>
-        <input type="number" id="numParticles" value="1000" min="1">
-
-        <button id="updateParticles">Update Particles</button>
-        <button onclick="loadScript('simple_flowfield.js')">Simple Flowfield</button>
-        <button onclick="loadScript('flowfield.js')">Flowfield</button>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+        <div class="input_class">
+            <label class="InputLabel" for="noiseInput">Noise Level</label>
+            <input class="input_59" type="number" id="noiseInput" value="1" min="0" max="100">
+        </div>
+        <br>
+        <div class="input_class">
+            <label class="InputLabel" for="numParticles">Number of Particles</label>
+            <input class="input_59" type="number" id="numParticles" value="1000" min="1">
+        </div>
+        <br>
+         <div class="input_class">
+            <label class="InputLabel" for="speedInput">Speed Modifier</label>
+            <input class="input_59" type="number" id="speedInput" value="1" min="1">
+        </div>
+        <br>
+        <div class="input_class">
+            <label class="InputLabel" for="cellSize" >Cell Size</label>
+            <input class="input_59" type="number" id="cellSize" value="50" min="40" max="500">
+        </div>
     </div>
+    <div class="container">
+        <div class="description-container">
+            <h2>Description</h2>
+            <p>This visualization divides the canvas into a grid of sections. Each section receives a unique random value
+                which directs the movement of particles passing through it. The extent of randomness or variation between
+                each section is controlled by an input value termed as 'noise'. A higher noise value results in greater
+                randomness, making each section distinct from the adjacent ones. The particles navigate based on these
+                random section values, creating dynamic and unpredictable movement patterns..</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <script> // Function to dynamically load a JavaScript file
         function loadScript(scriptName) {
+
             const existingScript = document.getElementById('flowfield-script');
             console.log(existingScript);
             // If there's already a script, remove it
@@ -37,6 +65,9 @@
                 if (scriptName === currentScriptName) {
                     console.log("Same script");
                     return; // If the script is already loaded, do nothing
+                }
+                if (window.cleanupFlowfields) {
+                    window.cleanupFlowfields();
                 }
                 existingScript.remove(); // Remove the existing script
 
@@ -51,7 +82,7 @@
 
     // Run on window load
     window.onload = () => {
-        loadScript('flowfield.js'); // Load the default script on load
+        loadScript('js/flowfield.js'); // Load the default script on load
     };
 
     </script>

@@ -1,0 +1,13 @@
+.description-container {
+    position: absolute; /* Position controls on top of the canvas */
+    left:5%;
+    height:500px;
+    top:18%;
+    width:25%;
+    padding: 10px;
+    background-color: #f0f0f0; /* Optional: Background color for the description */
+    border: 3px solid #1e1e1e;
+    text-align: left;
+    box-sizing: border-box;
+    overflow-y: auto; /* Add scroll for overflowing content */
+}

@@ -9,33 +9,34 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0; /* Optional: Light background color */
+    background-color: #85929e; /* Optional: Light background color */
 }
 
-.canvas-container {
-    position: relative; /* Allows positioning of canvas */
-    width: 500px; /* Set a fixed width for the canvas */
-    height: 500px; /* Set a fixed height for the canvas */
-}
 
-canvas {
-    display: block; /* Remove inline space under canvas */
-    background-color: white; /* Optional: Background color for the canvas */
-}
+
 
 .controls {
     position: absolute; /* Position controls on top of the canvas */
-    top: 10px; /* Distance from the top */
-    left: 10px; /* Distance from the left */
+    text-align: center ; /* Distance from the top */
+    left: 70%; /* Distance from the left */
     z-index: 1; /* Bring controls to the front */
-    background-color: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
+    /* Optional: Semi-transparent background */
     padding: 10px; /* Optional: Padding for better touch targets */
     border-radius: 5px; /* Optional: Rounded corners */
 }
+
+
+
+.script_controls {
+    position: absolute;
+    text-align: center;
+    top: 5%;
+}
+
+
 
 :root {
     --colors1: #f72585, #b5179e, #7209b7, #560bad, #480ca8, #3a0ca3, #3f37c9, #4361ee, #4895ef, #ffffff;
     --colors2: #4c026b, #730d9e, #9622c7, #b44ae0, #cd72f2, #e599f7, #f6c1fa, #f9e8fb, #ffffff;
     --colors_Sienna_yellow: #f8cf20, #f7d94c, #f6e178, #f5ea9f, #f4f2c6, #f3f9ed, #ffffff;
-
 }
