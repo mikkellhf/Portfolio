@@ -71,7 +71,7 @@ ${date}
                     const matchedProject = projectsList.find(
                         project => project.toLowerCase() === command.toLowerCase());
                     //Note that if run locally, this should be '/Portfolio/', however for GitHub Pages, it should be 'Portfolio/'
-                    window.location.href = `Portfolio/Projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
+                    window.location.href = `/Portfolio/Projects/${matchedProject.toLowerCase()}/${matchedProject.toLowerCase()}.html`;
                 } else {
                     resolve(`
 Unknown command: ${command}
