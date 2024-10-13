@@ -13,6 +13,7 @@
 canvas {
     display: block; /* Remove inline space under canvas */
     background-color: white; /* Optional: Background color for the canvas */
-    width: 99.99%;
+    width: 500px;
+    height:500px;
 
 }

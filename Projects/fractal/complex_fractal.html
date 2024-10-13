@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Viewer</title>
+    <style>
+        #myCanvas {
+            border: 1px solid black;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .controls {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label for="realPart">Real Part: </label>
+        <input type="range" id="realPart" name="realPart" min="-2" max="2" step="0.01" value="0">
+        <span id="realValue">0</span>
+
+        <label for="imaginaryPart">Imaginary Part: </label>
+        <input type="range" id="imaginaryPart" name="imaginaryPart" min="-2" max="2" step="0.01" value="0">
+        <span id="imaginaryValue">0</span>
+
+        <button id="drawMandelbrot">Draw Mandelbrot</button>
+        <button id="drawJulia">Draw Julia</button>
+    </div>
+    <canvas id="myCanvas"></canvas>
+    <script src="js/mandelbrot.js"></script>
+</body>
+</html>

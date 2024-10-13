@@ -34,7 +34,7 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Calculate an appropriate size that scales with depth and fits within the canvas
-    const maxCanvasSize = Math.min(canvas.width, canvas.height) / 2;
+    const maxCanvasSize = Math.min(canvas.width, canvas.height)/settings["scale"];
     const size = calculateAppropriateSize(settings.depth, maxCanvasSize);
 
     drawFractal({ ...settings, size });
@@ -109,8 +109,18 @@ draw();
 // Prevent form's default submit behavior and draw fractal on button click
 document.getElementById("ApplySettings").addEventListener('click', draw);
 
-// Prevent form submission by pressing Enter key inside inputs
-document.getElementById("settings-form").addEventListener('submit', function (event) {
-    event.preventDefault();
+document.getElementById("Depth").addEventListener('change', function (event) {
+    draw();
+});
+document.getElementById("Sides").addEventListener('change', function (event) {
+    draw();
+});
+document.getElementById("Scale").addEventListener('change', function (event) {
+    draw();
+});
+document.getElementById("Spread").addEventListener('change', function (event) {
+    draw();
+});
+document.getElementById("Branches").addEventListener('change', function (event) {
     draw();
 });
