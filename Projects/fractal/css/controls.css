@@ -6,37 +6,39 @@
 
 body, html {
     height: 100%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #85929e; /* Optional: Light background color */
 }
 
+.canvas-container {
+    position: relative;
+}
 
-
+canvas {
+    z-index: 0; /* Keeps canvas behind controls */
+}
 
 .controls {
-    position: absolute; /* Position controls on top of the canvas */
-    text-align: center ; /* Distance from the top */
-    left: 70%; /* Distance from the left */
-    z-index: 1; /* Bring controls to the front */
-    /* Optional: Semi-transparent background */
-    padding: 10px; /* Optional: Padding for better touch targets */
+    display: flex;
+    flex-direction: row;
+    position: relative; /* Position the controls absolutely within the canvas container */
+    top: -34%; /* Position the controls near the top of the canvas */
+    z-index: 1; /* Bring controls on top of the canvas */
     border-radius: 5px; /* Optional: Rounded corners */
+    background-color: rgba(255, 255, 255, 0); /* Optional: Semi-transparent background for visibility */
 }
 
-
-
-.script_controls {
-    position: absolute;
-    text-align: center;
-    top: 5%;
+.controls label {
+    margin-right: 5px;
 }
 
+.controls input[type=range] {
+    margin: 0 10px;
+}
 
-
-:root {
-    --colors1: #f72585, #b5179e, #7209b7, #560bad, #480ca8, #3a0ca3, #3f37c9, #4361ee, #4895ef, #ffffff;
-    --colors2: #4c026b, #730d9e, #9622c7, #b44ae0, #cd72f2, #e599f7, #f6c1fa, #f9e8fb, #ffffff;
-    --colors_Sienna_yellow: #f8cf20, #f7d94c, #f6e178, #f5ea9f, #f4f2c6, #f3f9ed, #ffffff;
+#drawMandelbrot, #drawJulia {
+    margin-top: 0%;
 }
