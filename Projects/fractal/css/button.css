@@ -15,9 +15,9 @@
     justify-content: center;
     letter-spacing: -.8px;
     line-height: 24px;
-    min-width: 140px;
+    min-width: 100px;
     outline: 0;
-    padding: 0 17px;
+    padding: 0 10px;
     text-align: center;
     text-decoration: none;
     transition: all .3s;
@@ -44,6 +44,6 @@
 
 @media (min-width: 768px) {
     .button-59 {
-        min-width: 170px;
+        min-width: 100px;
     }
 }

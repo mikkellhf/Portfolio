@@ -67,3 +67,20 @@ select {
     padding: 5px; /* Some padding for the select */
     font-size: 16px; /* Increase font size for better readability */
 }
+.input_class input[type="checkbox"] {
+    width: 16px; /* Smaller width for the checkbox */
+    height: 16px; /* Smaller height for the checkbox */
+    margin-right: 5px; /* Space between checkbox and question mark */
+}
+
+.info-icon {
+    display: inline-block;
+    margin-left: 5px; /* Space between checkbox and info icon */
+    cursor: pointer; /* Change cursor to indicate it's interactive */
+    color: #007BFF; /* Color of the question mark */
+    font-weight: bold; /* Make it stand out */
+}
+
+.info-icon:hover {
+    text-decoration: underline; /* Underline on hover for better UX */
+}

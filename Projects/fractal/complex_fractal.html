@@ -11,65 +11,77 @@
 </head>
 <body>
     <div id="canvas-parent">
-        <div id="canvas_left">
-            <div class="controls">
+        <div class="canvas_mandel">
+            <div type="controls">
+                <button class="button-59" role="button" id="drawMandelbrot">Draw</button>
                 <div class="input_class">
-                    <label for="mResolutionSelect">Resolution:</label>
+                    <label for="mResolutionSelect">Pixels:</label>
                     <select id="mResolutionSelect">
-                        <option value="256" selected>256px</option>
-                        <option value="512">512px</option>
-                        <option value="1024">1024px</option>
-                        <option value="2048">2048px</option>
-                        <option value="4096">4096px</option>
-                        <option value="8192">8192px</option>
+                        <option value="256" selected>256</option>
+                        <option value="512">512</option>
+                        <option value="1024">1024</option>
+                        <option value="2048">2048</option>
+                        <option value="4096">4096</option>
+                        <option value="8192">8192</option>
                     </select>
                 </div>
-
-                <button class="button-59" role="button" id="drawMandelbrot">Draw Mandelbrot</button>
-            </div>
-            <div class="canvas-container" id="mandelbrot_container_id">
-                <canvas id="mandelbrotCanvas"></canvas>
-            </div>
-        </div>
-        <div class="input_class">
-                    <label for="colorSchemeSelect">Color Scheme:</label>
-                    <select id="colorSchemeSelect">
-                        <option value="gray" selected> grey</option>
-                        <option value="warp"> Warp</option>
-                        <option value="random">Random Colors</option>
-                    </select>
-        </div>
-        <div id="canvas_right">
-            <div class="controls">
                 <div class="input_class">
-                    <label for="juliaResolutionSelect">Resolution:</label>
-                    <select id="juliaResolutionSelect">
-                        <option value="256" selected>256px</option>
-                        <option value="512">512px</option>
-                        <option value="1024">1024px</option>
-                        <option value="2048">2048px</option>
-                        <option value="4096">4096px</option>
-                        <option value="8192">8192px</option>
+                    <label for="colorSchemeSelectMandel">Color:</label>
+                    <select id="colorSchemeSelectMandel">
+                        <option value="warp" selected> Warp</option>
+                        <option value="gray"> grey</option>
+                        <option value="random">Random</option>
+                        <option value="TEST"> TEST </option>
                     </select>
                 </div>
-                <button class="button-59" role="button" id="drawJulia">Draw Julia</button>
             </div>
+            <div class="canvas-wrapper">
+                <div class="canvas-container" id="mandelbrot_container_id">
+                    <canvas id="mandelbrotCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+    <div class="canvas_julia">
+        <div type="controls">
+            <button class="button-59" role="button" id="drawJulia">Draw</button>
+            <div class="input_class">
+                <label for="juliaResolutionSelect">Pixels:</label>
+                <select id="juliaResolutionSelect">
+                    <option value="256" selected>256</option>
+                    <option value="512">512</option>
+                    <option value="1024">1024</option>
+                    <option value="2048">2048</option>
+                    <option value="4096">4096</option>
+                    <option value="8192">8192</option>
+                </select>
+            </div>
+            <div class="input_class">
+                <label for="colorSchemeSelectJulia">Color: </label>
+                <select id="colorSchemeSelectJulia">
+                    <option value="warp" selected> Warp</option>
+                    <option value="gray"> grey</option>
+                    <option value="random">Random</option>
+                    <option value="TEST"> TEST </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
             <div class="canvas-container" id="julia_container_id">
                 <canvas id="juliaCanvas"></canvas>
             </div>
+            <div class="complex-number-display" id="juliaComplexNumber">
+                <p>Current Complex Number: (-0.8, 0.156)</p>
+            </div>
         </div>
-    <div>
-        <input type="checkbox" id="findInMandelbrot" />
-        <label for="findInMandelbrot">Find first complex number in Mandelbrot set</label>
     </div>
-    </div>
-
-    <div class="complex-number-display" id="juliaComplexNumber">
-        <p>Current Complex Number: (-0.8, 0.156)</p>
-    </div>
+</div>
 
     <script type="module" src="js/fractalUtils.js"></script>
     <script type="module" src="js/mandelbrot_efficient.js"></script>
     <script type="module" src="js/juliaset.js"></script>
+    <script type="module" src="js/fractalworker.js"></script>
+
 </body>
 </html>

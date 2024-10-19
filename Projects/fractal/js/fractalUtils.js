@@ -1,13 +1,10 @@
 import {
-    grayColor,
-    warpColor,
     generateRandomColors,
-    randomColor,
+    getColor,
     maxIterations
 } from './colorUtils.js'; // Adjust the path as needed
 
 const threshold_squared = 4;
-let colorScheme = document.getElementById("colorSchemeSelect").value;
 
 export function setupCanvas(canvas, ctx, resolution) {
     canvas.width = resolution;
@@ -26,14 +23,14 @@ export function setupCanvas(canvas, ctx, resolution) {
 
 
 // Main complex number check function
-export function checkComplexNumber(z_real, z_im, c_real, c_im) {
+export function checkComplexNumber(z_real, z_im, c_real, c_im, set_type) {
     for (let i = 0; i < maxIterations; i++) {
         const z_real2 = z_real * z_real;
         const z_im2 = z_im * z_im;
 
         // Check if the point escapes
         if (z_real2 + z_im2 > threshold_squared) {
-            return getColor(i); // Get the color based on iterations
+            return getColor(i, set_type); // Get the color based on iterations
         }
 
         // Update z for the next iteration
@@ -45,21 +42,9 @@ export function checkComplexNumber(z_real, z_im, c_real, c_im) {
     return [0, 0, 0]; // Belongs to the set (black)
 }
 
-// Function to determine color based on the selected color scheme
-function getColor(iterations) {
-    switch (colorScheme) {
-        case "gray":
-            return grayColor(iterations);
-        case "warp":
-            return warpColor(iterations);
-        case "random":
-            return randomColor(iterations);
-        default:
-            return [0, 0, 0]; // Black for points in the set
-    }
-}
 
-function superSample(x, y, zoom, xOffset, yOffset, resolution, setType, c_real = 0, c_im = 0) {
+
+function superSample(x, y, zoom, xOffset, yOffset, resolution, set_type, c_real = 0, c_im = 0) {
     const samples = 4; // Number of super samples for antialiasing
     let rTotal = 0, gTotal = 0, bTotal = 0;
 
@@ -72,16 +57,16 @@ function superSample(x, y, zoom, xOffset, yOffset, resolution, setType, c_real =
         let z_im = 0;
 
         // Set c_real and c_im based on the set type
-        if (setType === 'mandelbrot') {
+        if (set_type === 'mandelbrot') {
             c_real = (randomX - resolution / 2) * 4 / (zoom * resolution) + xOffset;
             c_im = (randomY - resolution / 2) * 4 / (zoom * resolution) + yOffset;
-        } else if (setType === 'julia') {
+        } else if (set_type === 'julia') {
             z_real = (randomX - resolution / 2) * 4 / (zoom * resolution) + xOffset;
             z_im = (randomY - resolution / 2) * 4 / (zoom * resolution) + yOffset;
         }
 
         // Use the check function with the appropriate z and c values
-        const color = checkComplexNumber(z_real, z_im, c_real, c_im);
+        const color = checkComplexNumber(z_real, z_im, c_real, c_im, set_type);
         rTotal += color[0];
         gTotal += color[1];
         bTotal += color[2];
@@ -95,13 +80,13 @@ function superSample(x, y, zoom, xOffset, yOffset, resolution, setType, c_real =
     ];
 }
 
-function drawLineGeneric(y, resolution, ctx, zoom, xOffset, yOffset, setType, c_real, c_im) {
+function drawLineGeneric(y, resolution, ctx, zoom, xOffset, yOffset, set_type, c_real, c_im) {
     const lineBuffer = ctx.createImageData(resolution, 1);  // Buffer for drawing a line at a time
     let offset = 0;
 
     for (let x = 0; x < resolution; x++) {
         // Perform super sampling for anti-aliasing
-        const color = superSample(x, y, zoom, xOffset, yOffset, resolution, setType, c_real, c_im);
+        const color = superSample(x, y, zoom, xOffset, yOffset, resolution, set_type, c_real, c_im);
 
         // Set pixel color in the buffer
         lineBuffer.data[offset++] = color[0]; // R
@@ -119,20 +104,17 @@ function drawLineGeneric(y, resolution, ctx, zoom, xOffset, yOffset, setType, c_
     }
 }
 
-export function animateLines(resolution, ctx, zoom, xOffset, yOffset, setType, c_real, c_im) {
+export function animateLines(resolution, ctx, zoom, xOffset, yOffset, set_type, c_real, c_im) {
     function animateLine(y) {
         if (y <= Math.floor(resolution / 2)) {
-            drawLineGeneric(y, resolution, ctx, zoom, xOffset, yOffset, setType, c_real, c_im);
+            drawLineGeneric(y, resolution, ctx, zoom, xOffset, yOffset, set_type, c_real, c_im);
             requestAnimationFrame(() => animateLine(y + 1));
         }
     }
     animateLine(0);  // Start rendering from the top
 }
 
-document.getElementById('colorSchemeSelect').addEventListener('change', () => {
-    colorScheme = document.getElementById("colorSchemeSelect").value;
-    generateRandomColors(256); // Regenerate random colors on scheme change if needed
-});
+
 
 // Initial random color generation
 generateRandomColors(256);

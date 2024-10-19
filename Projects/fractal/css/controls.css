@@ -13,13 +13,7 @@ body, html {
     background-color: #85929e; /* Optional: Light background color */
 }
 
-.canvas-container {
-    position: relative;
-}
 
-canvas {
-    z-index: 0; /* Keeps canvas behind controls */
-}
 
 .controls {
     display: flex;
@@ -29,6 +23,7 @@ canvas {
     z-index: 1; /* Bring controls on top of the canvas */
     border-radius: 5px; /* Optional: Rounded corners */
     background-color: rgba(255, 255, 255, 0); /* Optional: Semi-transparent background for visibility */
+
 }
 
 .controls label {
@@ -36,7 +31,7 @@ canvas {
 }
 
 .controls input[type=range] {
-    margin: 0 10px;
+    margin: 0 5px;
 }
 
 #drawMandelbrot, #drawJulia {
