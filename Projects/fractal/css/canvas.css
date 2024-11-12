@@ -1,12 +1,11 @@
 #canvas-parent {
     display: flex;
     flex-direction: row;
-    height: 100vh;
-    width: 95vw;
+    height: 100%;
+    width: 95%;
     pointer-events: auto;
     flex: 2;
     margin:3%;
-
 
 }
 
