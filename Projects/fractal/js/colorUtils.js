@@ -1,70 +1,79 @@
-export const maxIterations = 3000;
-const mandelbrot_intensity = { gray: 3, warp: 500, random: 10 };
-const julia_intensity = { gray: 2, warp: 5, random: 2 };
+
 let colorScheme = {
     mandelbrot: document.getElementById("colorSchemeSelectMandel").value,
-    julia: document.getElementById("colorSchemeSelectJulia").value
+    julia: document.getElementById("colorSchemeSelectJulia").value,
+    mandelbrot_warp: hexToRgb(document.getElementById("c1").value),
+    julia_warp: hexToRgb(document.getElementById("c2").value)
 };
 
-// Create a color palette bitmap
-let colorBitmap = new Array(maxIterations);
-
-// Generate color palette based on current color scheme
-function generateColorPalette(set_type) {
-    for (let i = 0; i < maxIterations; i++) {
-        colorBitmap[i] = getColor(i, set_type); // Use mandelbrot for generating the palette
-    }
-}
 
 // Update the color scheme on change
 document.getElementById('colorSchemeSelectMandel').addEventListener('change', () => {
     colorScheme.mandelbrot = document.getElementById("colorSchemeSelectMandel").value;
-    generateColorPalette('mandelbrot'); // Regenerate color palette on scheme change
 });
 
 document.getElementById('colorSchemeSelectJulia').addEventListener('change', () => {
     colorScheme.julia = document.getElementById("colorSchemeSelectJulia").value;
-    generateColorPalette('julia'); // Regenerate color palette on scheme change
 });
 
-// Function to determine color based on the selected color scheme
-export function getColor(iterations, set_type) {
-    const currentScheme = set_type === 'mandelbrot' ? colorScheme.mandelbrot : colorScheme.julia;
+document.getElementById('c1').addEventListener('change', () => {
+    colorScheme.mandelbrot_warp = hexToRgb(document.getElementById("c1").value);
+});
+document.getElementById('c2').addEventListener('change', () => {
+   colorScheme.julia_warp = hexToRgb(document.getElementById("c2").value);
+});
 
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    console.log(r,g,b)
+    return [r,g,b];
+}
+
+/**
+ * Simple control flow to return the correct color based on the ColorScheme chosen.
+ * @param iterations
+ * @param maxIterations
+ * @param set_type
+ * @returns {[number, number, number]}
+ * */
+export function getColor(iterations, maxIterations, set_type) {
+    const currentScheme = set_type === 'mandelbrot' ? colorScheme.mandelbrot : colorScheme.julia;
+    const currentWarpColor = set_type === 'mandelbrot' ? colorScheme.mandelbrot_warp : colorScheme.julia_warp;
     switch (currentScheme) {
-        case "gray":
-            return warpColor(iterations, set_type, 'gray');
-        case "red":
-            return warpColor(iterations, set_type, 'red');
-        case "blue":
-            return warpColor(iterations, set_type, 'blue');
-        case "green":
-            return warpColor(iterations, set_type, 'green');
+        case "warp":
+            return warpColor(iterations, currentWarpColor, maxIterations);
         case "random":
-            return randomColor(iterations, set_type);
+            return lch(iterations, maxIterations);
         case "red_black":
-            return red_black(iterations);
+            return red_black(iterations, maxIterations);
         default:
             return [0, 0, 0]; // Black for points in the set
     }
 }
 
-// Use bitmap for color retrieval
-export function getColorFromBitmap(iterations) {
-    if (iterations >= maxIterations) {
-        return [0, 0, 0]; // Black for points in the set
-    }
-    return colorBitmap[iterations]; // Retrieve color from the bitmap
-}
 
-function red_black(iteration) {
+/**
+ * Calculates an HSL and returns the HSL as RBG 
+ * @param iteration
+ * @param maxIterations
+ * @returns {[number, number, number]}
+ * */
+function red_black(iteration, maxIterations) {
     const hue = (iteration / maxIterations) * 360; // Calculate hue based on iteration
     const saturation = 100; // Full saturation
     const lightness = (iteration < maxIterations) ? 50 : 0; // Dark for max iterations
     return hslToRgb(hue, saturation, lightness); // Convert to RGB
 }
 
-// Convert HSL to RGB
+/**
+ * Converts hsl to RGB and returns the RGB
+ * @param hue
+ * @param saturation
+ * @param lightness
+ * @returns {[number, number, number]} */
 function hslToRgb(hue, saturation, lightness) {
     let r, g, b;
     saturation /= 100;
@@ -96,9 +105,72 @@ function hslToRgb(hue, saturation, lightness) {
     ];
 }
 
+/**
+ * Returns the LCH transformed to RGB
+ * @param L
+ * @param C
+ * @param H
+ * @returns {[number, number, number]}
+ */
+function lchToRgb(L, C, H) {
+    // Convert LCH to LAB
+    const H_rad = (H * Math.PI) / 180; // Convert hue to radians
+    const a = Math.cos(H_rad) * C;
+    const b_lab = Math.sin(H_rad) * C; // Rename to avoid conflict with RGB 'b'
+
+    // Convert LAB to XYZ
+    let y = (L + 16) / 116;
+    let x = a / 500 + y;
+    let z = y - b_lab / 200;
+
+    const y3 = Math.pow(y, 3);
+    const x3 = Math.pow(x, 3);
+    const z3 = Math.pow(z, 3);
+
+    y = y3 > 0.008856 ? y3 : (y - 16 / 116) / 7.787;
+    x = x3 > 0.008856 ? x3 : (x - 16 / 116) / 7.787;
+    z = z3 > 0.008856 ? z3 : (z - 16 / 116) / 7.787;
+
+    // Reference white point (D65)
+    const refX = 95.047;
+    const refY = 100.0;
+    const refZ = 108.883;
+
+    x = x * refX;
+    y = y * refY;
+    z = z * refZ;
+
+    // Convert XYZ to linear RGB
+    x /= 100;
+    y /= 100;
+    z /= 100;
+
+    let r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+    let g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+    let b = x * 0.0557 + y * -0.2040 + z * 1.0570; // Now distinct from LAB 'b'
+
+    // Apply gamma correction (sRGB companding)
+    r = r > 0.0031308 ? 1.055 * Math.pow(r, 1 / 2.4) - 0.055 : 12.92 * r;
+    g = g > 0.0031308 ? 1.055 * Math.pow(g, 1 / 2.4) - 0.055 : 12.92 * g;
+    b = b > 0.0031308 ? 1.055 * Math.pow(b, 1 / 2.4) - 0.055 : 12.92 * b;
+
+    // Clamp and convert to 0-255 range
+    r = Math.min(Math.max(0, r), 1) * 255;
+    g = Math.min(Math.max(0, g), 1) * 255;
+    b = Math.min(Math.max(0, b), 1) * 255;
+
+    return [Math.round(r), Math.round(g), Math.round(b)];
+}
 
 
-function warpColor(iterations, set_type, color) {
+/**
+ * Determines the intensity of a pixel, either black or some color times' intensity. 
+ * @param iterations
+ * @param color
+ * @param maxIterations
+ * @returns {[number, number, number]}
+ * */
+function warpColor(iterations, color, maxIterations) {
     if (iterations === maxIterations) {
         return [0, 0, 0]; // Black for points in the set
     }
@@ -106,49 +178,32 @@ function warpColor(iterations, set_type, color) {
     const factor = Math.sqrt(iterations / maxIterations); // Scale the intensity
     const intensity = Math.floor(255 * factor); // Scale to 255
 
-    // Use the appropriate intensity factor based on the set type
-    const intensityFactor = set_type === 'mandelbrot' ? mandelbrot_intensity.gray : julia_intensity.gray;
-
     // Brighten the intensity based on the factor
-    const brightenedIntensity = Math.min(255, Math.round(intensity * intensityFactor));
+    const brightenedIntensity = Math.min(255, Math.round(intensity));
 
-    // Adjust RGB values based on the color chosen
-    switch (color) {
-        case 'gray':
-            return [brightenedIntensity, brightenedIntensity, brightenedIntensity];
-        case 'green':
-            return [0, brightenedIntensity*2.5, 0];
-        case 'blue':
-            return [0, 0, brightenedIntensity*2.5];
-        case 'red':
-            return [brightenedIntensity*2.5, 0, 0];
-        default:
-            return [brightenedIntensity, brightenedIntensity, brightenedIntensity];
-    }
+
+
+    return [brightenedIntensity*color[0]/255, brightenedIntensity*color[1]/255, brightenedIntensity*color[2]/255];
+
+
 }
 
 
-
-let colorPalette = [];
-
-// Function to generate random colors (if needed)
-export function generateRandomColors(size) {
-    colorPalette = [];
-    for (let i = 0; i < size; i++) {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        colorPalette.push([r, g, b]);
-    }
+/**
+ * Calculates the LCH (Luminance, Chroma, and Hue) based on the iteration, and returns the corresponding RGB
+ * @param iterations
+ * @param maxIterations
+ * @returns {[number,number,number]}
+ */
+export function lch(iterations, maxIterations){
+    const s = iterations / maxIterations;
+    const v = 1.0 - Math.pow(Math.cos(Math.PI * s), 2.0);
+    const LCH = [
+        75 - (75 * v),
+        28 + (75 - (75 * v)),
+        Math.pow(360 * s, 1.5) % 360
+    ];
+    return lchToRgb(LCH[0], LCH[1], LCH[2]);
 }
 
-export function randomColor(iterations, set_type) {
-    if (iterations === maxIterations) {
-        return [0, 0, 0]; // Black for points in the set
-    }
 
-    return colorPalette[iterations % colorPalette.length]; // Use modulo for index
-}
-
-// Call generateColorPalette initially
-generateColorPalette();

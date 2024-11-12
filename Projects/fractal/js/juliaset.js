@@ -29,7 +29,8 @@ function isInMandelbrotSet(real, imaginary, maxIterations = 1000) {
 }
 
 function plotJulia(c_real, c_im) {
-    console.log(c_real,c_im)
+
+
     const zoom = 1;
     const xOffset = 0;
     const yOffset = 0;
@@ -53,41 +54,48 @@ const mandelbrotCanvas = document.getElementById("mandelbrotCanvas");
 
 mandelbrotCanvas.addEventListener('click', function (event) {
     const rect = mandelbrotCanvas.getBoundingClientRect();
-    const x = event.clientX - rect.left; // X coordinate
-    const y = event.clientY - rect.top; // Y coordinate
+    const x = event.clientX - rect.left; // X coordinate relative to canvas
+    const y = event.clientY - rect.top;  // Y coordinate relative to canvas
 
-    const canvasWidth = rect.width;  // Actual canvas width
-    const canvasHeight = rect.height; // Actual canvas height
+    const canvasWidth = rect.width;      // Canvas width
+    const canvasHeight = rect.height;    // Canvas height
 
-    const centerX = (x / canvasWidth) * 4 - 2; // Map to Mandelbrot's range
-    const centerY = (y / canvasHeight) * 4 - 2; // Map to Mandelbrot's range
+    // Calculate the aspect ratio
+    const aspectRatio = canvasWidth / canvasHeight;
 
+    // Determine the scaling factors based on zoom and aspect ratio
+    const scaleX = (4 / 1.6) * aspectRatio;
+    const scaleY = 4 / 1.6;
 
-   const searchRange = 1; // Increase search range to find more points
-    let found = false;
-    // Check the clicked point first
-    if (isInMandelbrotSet(centerX, centerY)) {
-        updateJuliaComplexNumber(centerX, centerY);
-        found = true;
+    // Map canvas coordinates to complex plane
+    const centerX = -0.75;
+    const centerY = 0;
 
-    }
+    const real = centerX + (x / canvasWidth - 0.5) * scaleX;
+    const imag = centerY - (y / canvasHeight - 0.5) * scaleY;
 
-    // If not found, search around the point
-    for (let dx = -searchRange; dx <= searchRange; dx += 0.1) {
-        for (let dy = -searchRange; dy <= searchRange; dy += 0.1) {
-            const real = centerX + dx;
-            const imaginary = centerY + dy;
-
-            if (isInMandelbrotSet(real, imaginary)) {
-                updateJuliaComplexNumber(real, imaginary);
-                found = true;
-                break;
+    // Check if the point is in the Mandelbrot set
+    if (isInMandelbrotSet(real, imag)) {
+        updateJuliaComplexNumber(real, imag);
+    } else {
+        // Optional: Search nearby points if the clicked point is not in the set
+        const searchRange = 0.2; // Adjust as needed
+        let found = false;
+        for (let dx = -searchRange; dx <= searchRange; dx += 0.01) {
+            for (let dy = -searchRange; dy <= searchRange; dy += 0.01) {
+                const nearbyReal = real + dx;
+                const nearbyImag = imag + dy;
+                if (isInMandelbrotSet(nearbyReal, nearbyImag)) {
+                    updateJuliaComplexNumber(nearbyReal, nearbyImag);
+                    found = true;
+                    break;
+                }
             }
+            if (found) break;
         }
-        if (found) break;
     }
-
 });
+
 
 // Ensure you have this function defined somewhere in your code
 function updateJuliaComplexNumber(re, im) {

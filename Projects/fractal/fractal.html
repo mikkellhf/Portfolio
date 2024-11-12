@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Fractal Explorer</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            background-color: #85929e; /* Optional: Light background color */
+        }
         body {
             font-family: Arial, sans-serif;
         }
         .container {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 5%;
         }
         .header {
             font-size: 2em;
@@ -45,6 +60,10 @@
         <div class="fractal-type">
             <h2>Complex Fractals</h2>
             <p>Dive into the complexity of fractals from the Mandelbrot and Julia set.</p>
+            <div class="canvas-wrapper">
+            <input type="image" src="MandelBrot.png" width=20%, height=20%>
+
+            </div>
             <a href="complex_fractal.html" class="button">Explore Complex Fractals</a>
         </div>
     </div>

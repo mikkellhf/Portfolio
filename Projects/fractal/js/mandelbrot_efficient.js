@@ -6,7 +6,6 @@ const ctxMandelbrot = mandelbrotCanvas.getContext("2d");
 
 const mandelbrotResolutionSelect = document.getElementById("mResolutionSelect");
 let resolutionMandelbrot = parseInt(mandelbrotResolutionSelect.value); // Get initial resolution
-let scheme = document.getElementById("mandelbrotScheme");
 
 
 

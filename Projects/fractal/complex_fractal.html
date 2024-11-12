@@ -19,16 +19,24 @@
             <a href="simple_fractal.html" class="button">Explore Simple Fractals</a>
             <div class="description-container">
                 <h2>Description</h2>
-                <p>Welcome to the Fractal Viewer! This program allows you to explore and visualize complex fractal patterns, including the Mandelbrot and Julia sets. Use the controls to customize the resolution and color scheme for each fractal, and then press "Draw" to generate the fractal on the canvas.</p>
+                <p>Welcome to the Fractal Viewer! This program allows you to explore and visualize complex fractal
+                    patterns, including the Mandelbrot and Julia sets. Use the controls to customize the resolution and
+                    color scheme for each fractal, and then press "Draw" to generate the fractal on the canvas.</p>
             <br>
+                    <p>In fractal exploration, the Mandelbrot set serves as a map of the Julia sets. By clicking on a
+                        point within the Mandelbrot set, you select a Julia set. Points within the Mandelbrot set
+                        generate connected Julia sets, while points outside produce disconnected, dust-like patterns.
+                    </p>
                     <p><strong>Resolution:</strong> Select the desired resolution (in pixels) for the fractal. Higher resolutions provide more detail but may take longer to render.</p>
+                    <br>
+                    <p><strong>Color Scheme:</strong> Select a color scheme for the fractal visualization. The available options include:</p>
+                    <ul>
+                        <li><strong>Warp:</strong> Allows you to choose a single color for the fractal. Click the box next to the warp option to select your desired color.</li>
+                        <li><strong>LCH:</strong> Utilizes the LCH (Lightness, Chroma, Hue) color space, which is designed to model human perception of color, making it ideal for UI design and color palettes. <a href="https://atmos.style/blog/lch-color-space" target="_blank">Learn more about LCH color space</a>.</li>
+                        <li><strong>Red/Black:</strong> Displays the fractal with a red background and black for the in-set regions.</li>
+                    </ul>
+
                 <br>
-                    <p><strong>Color Scheme:</strong> Choose a color scheme for the fractal. Options include grayscale, red, green, and blue, as well as custom schemes like "Random" and "Red/Black."</p>
-                <br>
-                    <p><strong>Mandelbrot Set:</strong> Adjust settings and click "Draw" to visualize the Mandelbrot set. This fractal is rendered on the left side of the screen.</p>
-                <br>
-                    <p><strong>Julia Set:</strong> Adjust settings and click "Draw" to visualize the Julia set. This fractal is rendered on the right side of the screen. The complex number displayed below the Julia set represents the current parameter used to generate the pattern.
-                        Clicking on the Mandelbrot set will change the complex number displayed (if the mouse is near a complex number in the set).</p>
 
                 <p>Experiment with different settings to discover beautiful and intricate fractal patterns. Enjoy exploring!</p>
             </div>
@@ -48,17 +56,16 @@
                     </select>
                 </div>
                 <div class="input_class">
-                    <label for="colorSchemeSelectMandel">Color:</label>
+                    <label for="colorSchemeSelectMandel">Scheme:</label>
                     <select id="colorSchemeSelectMandel">
-                        <option value="gray" selected>Grey warp</option>
-                        <option value="red">Red warp</option>
-                        <option value="green">Green warp</option>
-                        <option value="blue">Blue warp</option>
-                        <option value="random">Random</option>
+                        <option value="warp" selected>warp</option>
+                        <option value="random">LCH</option>
                         <option value="red_black">Red/Black</option>
                     </select>
                 </div>
-            </div>
+                    <label for="c1" id="warpColorLabelMandel" class="InputLabel" style="display: none;"></label>
+                    <input type="color" id="c1" name="c1" value="#FF0000" style="display: none;">
+                </div>
             <div class="canvas-wrapper">
                 <div class="canvas-container" id="mandelbrot_container_id">
                     <canvas id="mandelbrotCanvas"></canvas>
@@ -81,18 +88,16 @@
                     </select>
                 </div>
                 <div class="input_class">
-                    <label for="colorSchemeSelectJulia">Color:</label>
+                    <label for="colorSchemeSelectJulia">Scheme:</label>
                     <select id="colorSchemeSelectJulia">
-                        <option value="gray" selected>Grey warp</option>
-                        <option value="red">Red warp</option>
-                        <option value="green">Green warp</option>
-                        <option value="blue">Blue warp</option>
-                        <option value="random">Random</option>
+                        <option value="warp" selected>warp</option>
+                        <option value="random">LCH</option>
                         <option value="red_black">Red/Black</option>
                     </select>
                 </div>
+                <label for="c2" id="warpColorLabelJulia" class="InputLabel" style="display: none;"></label>
+                <input type="color" id="c2" name="c2" value="#FF0000" style="display: none;">
             </div>
-
             <div class="canvas-wrapper">
                 <div class="canvas-container" id="julia_container_id">
                     <canvas id="juliaCanvas"></canvas>
@@ -109,4 +114,42 @@
     <script type="module" src="js/juliaset.js"></script>
 
 </body>
+<script>
+    const colorSchemeSelectMandel = document.getElementById("colorSchemeSelectMandel");
+    const warpColorLabelMandel = document.getElementById("warpColorLabelMandel");
+    const warpColorInputMandel = document.getElementById("c1");
+
+    const colorSchemeSelectJulia = document.getElementById("colorSchemeSelectJulia");
+    const warpColorLabelJulia = document.getElementById("warpColorLabelJulia");
+    const warpColorInputJulia = document.getElementById("c2");
+    // Function to toggle color input visibility based on selected scheme
+    function toggleWarpColorInputMandel() {
+        if (colorSchemeSelectMandel.value === "warp") {
+            warpColorLabelMandel.style.display = "inline";
+            warpColorInputMandel.style.display = "inline";
+        } else {
+            warpColorLabelMandel.style.display = "none";
+            warpColorInputMandel.style.display = "none";
+        }
+    }
+    function toggleWarpColorInputJulia() {
+         if (colorSchemeSelectJulia.value === "warp") {
+            warpColorLabelJulia.style.display = "inline";
+            warpColorInputJulia.style.display = "inline";
+        } else {
+            warpColorLabelJulia.style.display = "none";
+            warpColorInputJulia.style.display = "none";
+        }
+    }
+
+
+
+    // Initial check in case "warp" is preselected
+    toggleWarpColorInputMandel();
+    toggleWarpColorInputJulia();
+    // Event listener to trigger toggle function on dropdown change
+    colorSchemeSelectMandel.addEventListener("change", toggleWarpColorInputMandel);
+    colorSchemeSelectJulia.addEventListener("change", toggleWarpColorInputJulia);
+
+</script>
 </html>
