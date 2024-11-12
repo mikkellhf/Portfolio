@@ -1,13 +1,51 @@
-.description-container {
-    position: absolute; /* Position controls on top of the canvas */
-    left:5%;
-    height:500px;
-    top:18%;
-    width:25%;
-    padding: 10px;
-    background-color: #f0f0f0; /* Optional: Background color for the description */
-    border: 3px solid #1e1e1e;
-    text-align: left;
+.main-container {
+    padding-top: 4%; /* Shifts entire layout down by 15px */
+    height: 100vh; /* Ensures the main container takes the full viewport height */
     box-sizing: border-box;
-    overflow-y: auto; /* Add scroll for overflowing content */
 }
+
+
+
+.description-container {
+    height:550px;
+    width: 25vw;
+
+    text-align: left;
+
+    padding: 8px;
+    margin-top:5%;
+    overflow-y: auto;
+
+    background-color: #f0f0f0;
+    border: 3px solid #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+
+    transform: translateY(6%); /* Moves the description down */
+}
+.description-container-simple {
+    height:600px;
+    width: 25vw;
+
+    text-align: left;
+
+    padding: 8px;
+    margin-top:5%;
+    overflow-y: auto;
+
+    background-color: #f0f0f0;
+    border: 3px solid #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+
+    transform: translateY(6%); /* Moves the description down */
+}
+
+
+
+.header {
+    text-align:center;
+}
+

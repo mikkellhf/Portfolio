@@ -8,9 +8,33 @@
     <link rel="stylesheet" href="css/canvas.css">
     <link rel="stylesheet" href="css/controls.css">
     <link rel="stylesheet" href="css/input.css">
+    <link rel="stylesheet" href="css/description.css">
 </head>
 <body>
+
+
     <div id="canvas-parent">
+        <div class="main-container">
+            <div class="header">
+                <h1>Complex Fractal Generator</h1>
+            </div>
+            <a href="simple_fractal.html" class="button">Explore Simple Fractals</a>
+            <div class="description-container">
+                <h2>Description</h2>
+                <p>Welcome to the Fractal Viewer! This program allows you to explore and visualize complex fractal patterns, including the Mandelbrot and Julia sets. Use the controls to customize the resolution and color scheme for each fractal, and then press "Draw" to generate the fractal on the canvas.</p>
+            <br>
+                    <p><strong>Resolution:</strong> Select the desired resolution (in pixels) for the fractal. Higher resolutions provide more detail but may take longer to render.</p>
+                <br>
+                    <p><strong>Color Scheme:</strong> Choose a color scheme for the fractal. Options include grayscale, red, green, and blue, as well as custom schemes like "Random" and "Red/Black."</p>
+                <br>
+                    <p><strong>Mandelbrot Set:</strong> Adjust settings and click "Draw" to visualize the Mandelbrot set. This fractal is rendered on the left side of the screen.</p>
+                <br>
+                    <p><strong>Julia Set:</strong> Adjust settings and click "Draw" to visualize the Julia set. This fractal is rendered on the right side of the screen. The complex number displayed below the Julia set represents the current parameter used to generate the pattern.
+                        Clicking on the Mandelbrot set will change the complex number displayed (if the mouse is near a complex number in the set).</p>
+
+                <p>Experiment with different settings to discover beautiful and intricate fractal patterns. Enjoy exploring!</p>
+            </div>
+        </div>
         <div class="canvas_mandel">
             <div type="controls">
                 <button class="button-59" role="button" id="drawMandelbrot">Draw</button>
@@ -28,10 +52,12 @@
                 <div class="input_class">
                     <label for="colorSchemeSelectMandel">Color:</label>
                     <select id="colorSchemeSelectMandel">
-                        <option value="warp" selected> Warp</option>
-                        <option value="gray"> grey</option>
+                        <option value="gray" selected>Grey warp</option>
+                        <option value="red">Red warp</option>
+                        <option value="green">Green warp</option>
+                        <option value="blue">Blue warp</option>
                         <option value="random">Random</option>
-                        <option value="TEST"> TEST </option>
+                        <option value="red_black">Red/Black</option>
                     </select>
                 </div>
             </div>
@@ -42,46 +68,47 @@
             </div>
         </div>
 
-    <div class="canvas_julia">
-        <div type="controls">
-            <button class="button-59" role="button" id="drawJulia">Draw</button>
-            <div class="input_class">
-                <label for="juliaResolutionSelect">Pixels:</label>
-                <select id="juliaResolutionSelect">
-                    <option value="256" selected>256</option>
-                    <option value="512">512</option>
-                    <option value="1024">1024</option>
-                    <option value="2048">2048</option>
-                    <option value="4096">4096</option>
-                    <option value="8192">8192</option>
-                </select>
+        <div class="canvas_julia">
+            <div type="controls">
+                <button class="button-59" role="button" id="drawJulia">Draw</button>
+                <div class="input_class">
+                    <label for="juliaResolutionSelect">Pixels:</label>
+                    <select id="juliaResolutionSelect">
+                        <option value="256" selected>256</option>
+                        <option value="512">512</option>
+                        <option value="1024">1024</option>
+                        <option value="2048">2048</option>
+                        <option value="4096">4096</option>
+                        <option value="8192">8192</option>
+                    </select>
+                </div>
+                <div class="input_class">
+                    <label for="colorSchemeSelectJulia">Color:</label>
+                    <select id="colorSchemeSelectJulia">
+                        <option value="gray" selected>Grey warp</option>
+                        <option value="red">Red warp</option>
+                        <option value="green">Green warp</option>
+                        <option value="blue">Blue warp</option>
+                        <option value="random">Random</option>
+                        <option value="red_black">Red/Black</option>
+                    </select>
+                </div>
             </div>
-            <div class="input_class">
-                <label for="colorSchemeSelectJulia">Color: </label>
-                <select id="colorSchemeSelectJulia">
-                    <option value="warp" selected> Warp</option>
-                    <option value="gray"> grey</option>
-                    <option value="random">Random</option>
-                    <option value="TEST"> TEST </option>
-                </select>
-            </div>
-        </div>
 
-        <div class="canvas-wrapper">
-            <div class="canvas-container" id="julia_container_id">
-                <canvas id="juliaCanvas"></canvas>
-            </div>
-            <div class="complex-number-display" id="juliaComplexNumber">
-                <p>Current Complex Number: (-0.8, 0.156)</p>
+            <div class="canvas-wrapper">
+                <div class="canvas-container" id="julia_container_id">
+                    <canvas id="juliaCanvas"></canvas>
+                </div>
+                <div class="complex-number-display" id="juliaComplexNumber">
+                    <p>Current Complex Number: (-0.8, 0.156)</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <script type="module" src="js/fractalUtils.js"></script>
     <script type="module" src="js/mandelbrot_efficient.js"></script>
     <script type="module" src="js/juliaset.js"></script>
-    <script type="module" src="js/fractalworker.js"></script>
 
 </body>
 </html>

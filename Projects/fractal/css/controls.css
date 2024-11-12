@@ -26,6 +26,17 @@ body, html {
 
 }
 
+.controls_simple {
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Position the controls absolutely within the canvas container */
+    z-index: 1; /* Bring controls on top of the canvas */
+    border-radius: 5px; /* Optional: Rounded corners */
+    background-color: rgba(255, 255, 255, 0); /* Optional: Semi-transparent background for visibility */
+
+}
+
 .controls label {
     margin-right: 5px;
 }

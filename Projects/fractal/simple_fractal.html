@@ -8,13 +8,43 @@
     <link rel = "stylesheet" href = "css/canvas.css" />
     <link rel = "stylesheet" href = "css/controls.css" />
     <link rel = "stylesheet" href = "css/input.css" />
+    <link rel = "stylesheet" href = "css/description.css"/>
 </head>
 <body>
-    <div class="canvas-container" id="canvas_container_id">
+    <div id="canvas-parent">
+    <div class="main-container">
+            <div class="header">
+                <h1>Simple fractal generator</h1>
+            </div>
+            <a href="complex_fractal.html" class="button">Explore Complex Fractals</a>
+
+            <div class="description-container-simple">
+            <h2>Description</h2>
+            <p>Welcome to the Simple Fractal Generator! This tool lets you create custom fractals by adjusting parameters such as sides, depth, scale, spread, and branches. Customize these settings and then click "Apply Settings" to generate your fractal pattern on the canvas.</p>
+        <br>
+            <p><strong>Color Gradient:</strong> Choose two colors to set the gradient that will be used in the fractal's design.</p>
+        <br>
+            <p><strong>Sides:</strong> Defines the number of sides for the fractal pattern. For example, a setting of 4 will generate a four-sided pattern.</p>
+        <br>
+            <p><strong>Depth:</strong> Sets the level of recursion, or depth, in the fractal pattern. Higher depths create more intricate designs but may take longer to render.</p>
+        <br>
+            <p><strong>Scale:</strong> Controls the scaling factor for each recursion level. Smaller values create tighter, more compact designs.</p>
+        <br>
+            <p><strong>Spread:</strong> Adjusts the spread or angle of branches in the fractal. Experiment with this to see different effects.</p>
+        <br>
+            <p><strong>Branches:</strong> Specifies the number of branches from each point in the fractal. Higher values create more complex branching structures.</p>
+        <br>
+            <p>Experiment with different settings to create unique and intricate fractal designs. Enjoy exploring!</p>
+        </div>
+
+        </div>
+
+    <div class="canvas-container_simple" id="canvas_container_id">
         <canvas id="myCanvas" ></canvas>
     </div>
+    <br>
 
-    <div class="controls">
+    <div class="controls_simple">
         <div class="input_class">
             <label class="InputLabel" for="#Colors">Color gradient:</label><br>
             <input type="color" id="c1" name="c1" value="#000000" size = "1">
@@ -23,7 +53,7 @@
         <br>
         <div class="input_class">
             <label class="InputLabel" for="Sides">Sides</label><br>
-            <input type="text" id="Sides" name="Sides" value="3">
+            <input type="text" id="Sides" name="Sides" value="4">
         </div>
         <br>
         <div class="input_class">
@@ -33,20 +63,22 @@
         <br>
         <div class="input_class">
             <label class="InputLabel" for="Scale">Scale</label>
-            <input type="text" id="Scale" name="Scale" value="1">
+            <input type="text" id="Scale" name="Scale" value="0.7">
         </div>
         <br>
         <div class="input_class">
             <label class="InputLabel" for="Spread">Spread</label>
-            <input type="text" id="Spread" name="Spread" value="1">
+            <input type="text" id="Spread" name="Spread" value="0.7">
         </div>
         <br>
 
         <div class="input_class">
             <label class="InputLabel" for="Branches">Branches</label><br>
-            <input type="text" id="Branches" name="Branches" value="3">
+            <input type="text" id="Branches" name="Branches" value="4">
         </div>
         <button id="ApplySettings" class="button-59" role="button" type="button">Apply Settings</button>
+    </div>
+
     <script src="js/fractals.js"></script>
 
 </body>

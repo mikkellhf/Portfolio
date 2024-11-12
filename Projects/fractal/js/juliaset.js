@@ -56,8 +56,8 @@ mandelbrotCanvas.addEventListener('click', function (event) {
     const x = event.clientX - rect.left; // X coordinate
     const y = event.clientY - rect.top; // Y coordinate
 
-    const canvasWidth = mandelbrotCanvas.width;  // Actual canvas width
-    const canvasHeight = mandelbrotCanvas.height; // Actual canvas height
+    const canvasWidth = rect.width;  // Actual canvas width
+    const canvasHeight = rect.height; // Actual canvas height
 
     const centerX = (x / canvasWidth) * 4 - 2; // Map to Mandelbrot's range
     const centerY = (y / canvasHeight) * 4 - 2; // Map to Mandelbrot's range

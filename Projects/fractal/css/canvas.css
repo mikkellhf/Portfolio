@@ -1,28 +1,25 @@
-
-
 #canvas-parent {
-    position: absolute;
     display: flex;
     flex-direction: row;
-    align-items: flex-start; /* Align canvases to the top */
-    justify-content: center; /* Center canvases horizontally */
-    height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full viewport width */
-    top: 60px; /* Position canvases slightly below the title */
-    left: 0; /* Start from the left */
-    pointer-events: auto; /* Ensure the wrapper allows clicks */
+    height: 100vh;
+    width: 95vw;
+    pointer-events: auto;
+    flex: 2;
+    margin:3%;
+
 
 }
+
 
 .canvas_julia, .canvas_mandel {
     display: flex;
     flex-direction: column; /* Stack canvas and controls vertically */
     align-items: center;
-    width: 32%;
+    width: 36.85%;
     aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
-    padding: 5px;
+    padding: 1%;
     pointer-events: auto; /* Ensure the wrapper allows clicks */
-
+    margin-top: 3.8%;
 }
 
 .canvas-container {
@@ -30,6 +27,20 @@
     width: 100%; /* Width of canvas container */
     aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
     border: 3px solid #1e1e1e; /* Uniform border on all sides */
+    background-color: white; /* Optional: Background color for the container */
+    overflow: hidden; /* Prevents overflow from the canvas */
+    text-align: center;
+    pointer-events: auto; /* Ensure the wrapper allows clicks */
+
+}
+
+.canvas-container_simple {
+    position: relative;
+    height: 90%;
+    margin:1%;
+
+    aspect-ratio: 1 / 1;
+    border: 3px solid #1e1e1e;
     background-color: white; /* Optional: Background color for the container */
     overflow: hidden; /* Prevents overflow from the canvas */
     text-align: center;

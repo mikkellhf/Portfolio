@@ -34,6 +34,9 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    margin-bottom: 5px;
+    margin-left:10px;
+
 }
 
 .input_59 {
@@ -66,6 +69,7 @@
 select {
     padding: 5px; /* Some padding for the select */
     font-size: 16px; /* Increase font size for better readability */
+    margin-left: 5px;
 }
 .input_class input[type="checkbox"] {
     width: 16px; /* Smaller width for the checkbox */

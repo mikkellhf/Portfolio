@@ -1,6 +1,6 @@
-export const maxIterations = 5000;
-const mandelbrot_intensity = { gray: 3, warp: 5000, random: 10 };
-const julia_intensity = { gray: 2, warp: 1500, random: 2 };
+export const maxIterations = 3000;
+const mandelbrot_intensity = { gray: 3, warp: 500, random: 10 };
+const julia_intensity = { gray: 2, warp: 5, random: 2 };
 let colorScheme = {
     mandelbrot: document.getElementById("colorSchemeSelectMandel").value,
     julia: document.getElementById("colorSchemeSelectJulia").value
@@ -10,21 +10,21 @@ let colorScheme = {
 let colorBitmap = new Array(maxIterations);
 
 // Generate color palette based on current color scheme
-function generateColorPalette() {
+function generateColorPalette(set_type) {
     for (let i = 0; i < maxIterations; i++) {
-        colorBitmap[i] = getColor(i, 'mandelbrot'); // Use mandelbrot for generating the palette
+        colorBitmap[i] = getColor(i, set_type); // Use mandelbrot for generating the palette
     }
 }
 
 // Update the color scheme on change
 document.getElementById('colorSchemeSelectMandel').addEventListener('change', () => {
     colorScheme.mandelbrot = document.getElementById("colorSchemeSelectMandel").value;
-    generateColorPalette(); // Regenerate color palette on scheme change
+    generateColorPalette('mandelbrot'); // Regenerate color palette on scheme change
 });
 
 document.getElementById('colorSchemeSelectJulia').addEventListener('change', () => {
     colorScheme.julia = document.getElementById("colorSchemeSelectJulia").value;
-    generateColorPalette(); // Regenerate color palette on scheme change
+    generateColorPalette('julia'); // Regenerate color palette on scheme change
 });
 
 // Function to determine color based on the selected color scheme
@@ -33,13 +33,17 @@ export function getColor(iterations, set_type) {
 
     switch (currentScheme) {
         case "gray":
-            return grayColor(iterations, set_type);
-        case "warp":
-            return warpColor(iterations, set_type);
+            return warpColor(iterations, set_type, 'gray');
+        case "red":
+            return warpColor(iterations, set_type, 'red');
+        case "blue":
+            return warpColor(iterations, set_type, 'blue');
+        case "green":
+            return warpColor(iterations, set_type, 'green');
         case "random":
             return randomColor(iterations, set_type);
-        case "TEST":
-            return psychedelicColor(iterations);
+        case "red_black":
+            return red_black(iterations);
         default:
             return [0, 0, 0]; // Black for points in the set
     }
@@ -53,7 +57,7 @@ export function getColorFromBitmap(iterations) {
     return colorBitmap[iterations]; // Retrieve color from the bitmap
 }
 
-function psychedelicColor(iteration) {
+function red_black(iteration) {
     const hue = (iteration / maxIterations) * 360; // Calculate hue based on iteration
     const saturation = 100; // Full saturation
     const lightness = (iteration < maxIterations) ? 50 : 0; // Dark for max iterations
@@ -92,7 +96,9 @@ function hslToRgb(hue, saturation, lightness) {
     ];
 }
 
-function grayColor(iterations, set_type) {
+
+
+function warpColor(iterations, set_type, color) {
     if (iterations === maxIterations) {
         return [0, 0, 0]; // Black for points in the set
     }
@@ -106,43 +112,22 @@ function grayColor(iterations, set_type) {
     // Brighten the intensity based on the factor
     const brightenedIntensity = Math.min(255, Math.round(intensity * intensityFactor));
 
-    return [brightenedIntensity, brightenedIntensity, brightenedIntensity]; // RGB grayscale
-}
-
-function warpColor(iterations, set_type) {
-    if (iterations === maxIterations) {
-        return [0, 0, 0]; // Black for points in the set
+    // Adjust RGB values based on the color chosen
+    switch (color) {
+        case 'gray':
+            return [brightenedIntensity, brightenedIntensity, brightenedIntensity];
+        case 'green':
+            return [0, brightenedIntensity*2.5, 0];
+        case 'blue':
+            return [0, 0, brightenedIntensity*2.5];
+        case 'red':
+            return [brightenedIntensity*2.5, 0, 0];
+        default:
+            return [brightenedIntensity, brightenedIntensity, brightenedIntensity];
     }
-
-    const halfIterations = maxIterations / 2; // Adjusted for 0-index
-    let r, g, b;
-
-    // Use the appropriate intensity factor based on the set type
-    const intensityFactor = set_type === 'mandelbrot' ? mandelbrot_intensity.warp : julia_intensity.warp;
-
-    // Scale red and green colors based on the current intensity
-    if (iterations < halfIterations) {
-        // Scale red color
-        r = Math.floor(scale(Math.max(1, iterations), intensityFactor));
-        g = 0;
-        b = 0;
-    } else {
-        r = 255; // Keep red at max
-        g = Math.floor(scale(iterations - halfIterations, intensityFactor)); // Scale green
-        b = 0;
-    }
-
-    // Ensure colors are within the valid range
-    r = Math.min(255, Math.max(0, r));
-    g = Math.min(255, Math.max(0, g));
-    b = Math.min(255, Math.max(0, b));
-
-    return [r, g, b]; // Return the color
 }
 
-function scale(i, intensityFactor) {
-    return Math.round((2.0 * (i - 1) / maxIterations) * intensityFactor); // Scale to max intensity (255)
-}
+
 
 let colorPalette = [];
 
