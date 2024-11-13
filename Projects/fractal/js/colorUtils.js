@@ -217,18 +217,13 @@ export function lch(iterations, maxIterations){
  * @returns {number[]}
  */
 export function wikiColor(iterations, maxIterations) {
-    const t = iterations / maxIterations; // Normalize to [0, 1]
-
-    const r = -180.31 * Math.sin(2 * Math.PI * 3 * t + 0.785) + 127.5;
-    // Green channel
-    const g = -159.69 * Math.sin(2 * Math.PI * 2.972 * t + 0.986) + 117.99;
-    // Blue channel
-    const b = 160.83 * Math.sin(2 * Math.PI * 3.144 * t - 0.141) + 133.93;
-
+    const t = iterations / maxIterations;
+    const w = 8;
+    const o = 0.5;
     return [
-        Math.min(255, Math.max(0, r)),
-        Math.min(255, Math.max(0, g)),
-        Math.min(255, Math.max(0, b))
+        127 * Math.sin(2 * w * Math.PI * t + o) + 128,
+        127 * Math.sin(2 * w * Math.PI * t + 2*o) + 128,
+        127 * Math.sin(2 * w * Math.PI * t + 4*o) + 128
     ];
 }
 
