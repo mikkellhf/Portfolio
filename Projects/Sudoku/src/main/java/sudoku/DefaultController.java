@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultController {
     @GetMapping
     public String respond() {
-        return "It works";
+        return "It works 1.0";
     }
 }
 
