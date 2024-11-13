@@ -12,3 +12,4 @@ public class DefaultController {
         return "It works";
     }
 }
+

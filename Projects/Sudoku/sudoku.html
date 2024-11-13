@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spring Boot Backend Integration</title>
+</head>
+<body>
+  <h1>Welcome to GitHub Pages!</h1>
+  <p id="response">Loading...</p>
+
+  <script>
+    // Replace this with your Spring Boot application's URL
+    const backendUrl = "https://sudoku-589270754733.europe-central2.run.app/";
+
+    // Fetch data from your Spring Boot backend
+    fetch(backendUrl)
+      .then(response => response.text())
+      .then(data => {
+        // Display the backend response
+        document.getElementById('response').innerText = data;
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        document.getElementById('response').innerText = "Error loading data.";
+      });
+  </script>
+</body>
+</html>
