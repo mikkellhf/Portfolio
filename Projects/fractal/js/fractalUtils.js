@@ -2,8 +2,8 @@ import {
     getColor
 } from './colorUtils.js';
 
-const baseMaxIterations = 600; // Base maximum iterations, can adjust for starting detail level
-const thresholdSquared = 5;
+const baseMaxIterations = 2300; // Base maximum iterations, can adjust for starting detail level
+const thresholdSquared = 10;
 
 /**
  * Simple function used to set up a canvas

@@ -49,6 +49,8 @@ export function getColor(iterations, maxIterations, set_type) {
             return lch(iterations, maxIterations);
         case "red_black":
             return red_black(iterations, maxIterations);
+        case "wiki":
+            return wikiColor(iterations, maxIterations);
         default:
             return [0, 0, 0]; // Black for points in the set
     }
@@ -206,4 +208,27 @@ export function lch(iterations, maxIterations){
     return lchToRgb(LCH[0], LCH[1], LCH[2]);
 }
 
+/**
+ * This functions returns a color scheme similarly to the one used in Ultra Fractal and Wikipedia
+ * It is calculated using a Sin function to create the gradient. C(t) = A * sin(2pit + ø) + B
+ * A is the amplitude, and we use 127 for range [0,255], similarly B is the center offset (e.g., 128 for [0,255])
+ * @param iterations
+ * @param maxIterations
+ * @returns {number[]}
+ */
+export function wikiColor(iterations, maxIterations) {
+    const t = iterations / maxIterations; // Normalize to [0, 1]
+
+    const r = -180.31 * Math.sin(2 * Math.PI * 3 * t + 0.785) + 127.5;
+    // Green channel
+    const g = -159.69 * Math.sin(2 * Math.PI * 2.972 * t + 0.986) + 117.99;
+    // Blue channel
+    const b = 160.83 * Math.sin(2 * Math.PI * 3.144 * t - 0.141) + 133.93;
+
+    return [
+        Math.min(255, Math.max(0, r)),
+        Math.min(255, Math.max(0, g)),
+        Math.min(255, Math.max(0, b))
+    ];
+}
 
