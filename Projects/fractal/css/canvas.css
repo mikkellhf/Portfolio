@@ -1,11 +1,12 @@
 #canvas-parent {
     display: flex;
     flex-direction: row;
-    height: 100%;
-    width: 95%;
+    height: 70%;
+    width: 85%;
     pointer-events: auto;
     flex: 2;
-    margin:3%;
+    margin-top:45px;
+    gap:5px;
 
 }
 
@@ -16,16 +17,15 @@
     align-items: center;
     width: 36.85%;
     aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
-    padding: 1%;
     pointer-events: auto; /* Ensure the wrapper allows clicks */
-    margin-top: 3.8%;
+    gap:20px;
 }
 
 .canvas-container {
     position: relative; /* Allows positioning of the canvas */
     width: 100%; /* Width of canvas container */
     aspect-ratio: 1 / 1; /* Maintain square aspect ratio */
-    border: 3px solid #1e1e1e; /* Uniform border on all sides */
+    border: 2px solid #1e1e1e; /* Uniform border on all sides */
     background-color: white; /* Optional: Background color for the container */
     overflow: hidden; /* Prevents overflow from the canvas */
     text-align: center;
@@ -57,7 +57,6 @@ canvas {
 }
 
 .complex-number-display {
-    margin-top: 10px;
     height: 30px; /* Fixed height to avoid canvas movement */
     text-align: center;
 }

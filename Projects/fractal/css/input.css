@@ -15,7 +15,6 @@
     border: 2px solid #000;
     box-sizing: border-box;
     color: #000;
-    cursor: pointer;
     display: inline-flex;
     fill: #000;
     font-family: Inter, sans-serif;
@@ -36,6 +35,7 @@
     touch-action: manipulation;
     margin-bottom: 5px;
     margin-left:10px;
+    border-radius: 5px;
 
 }
 
@@ -64,6 +64,7 @@
     font-family: Inter, sans-serif;
     font-size: 16px;
     font-weight: 600;
+    padding: 0px;
 }
 
 select {
@@ -96,4 +97,6 @@ input[type="color"] {
             padding: 0;
             border: 1px solid #000;
             cursor: pointer;
+        border-radius: 5px;
+
 }

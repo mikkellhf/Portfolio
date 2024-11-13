@@ -178,7 +178,7 @@ function warpColor(iterations, color, maxIterations) {
     }
 
     const factor = Math.sqrt(iterations / maxIterations); // Scale the intensity
-    const intensity = Math.floor(255 * factor); // Scale to 255
+    const intensity = Math.floor(255 * factor*2.8); // Scale to 255
 
     // Brighten the intensity based on the factor
     const brightenedIntensity = Math.min(255, Math.round(intensity));

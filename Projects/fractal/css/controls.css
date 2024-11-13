@@ -6,12 +6,13 @@
 
 body, html {
     height: 100%;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #85929e; /* Optional: Light background color */
+    flex-direction: column;
 }
+
 
 
 

@@ -10,28 +10,21 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: #85929e; /* Optional: Light background color */
+    flex-direction: column;
 }
 
 
 
 
 .controls {
-    position: absolute; /* Position controls on top of the canvas */
-    text-align: center ; /* Distance from the top */
-    left: 70%; /* Distance from the left */
     z-index: 1; /* Bring controls to the front */
-    /* Optional: Semi-transparent background */
     padding: 10px; /* Optional: Padding for better touch targets */
-    border-radius: 5px; /* Optional: Rounded corners */
+    border-radius: 5px;
 }
 
 
 
-.script_controls {
-    position: absolute;
-    text-align: center;
-    top: 5%;
-}
+
 
 
 

@@ -11,16 +11,16 @@
     <link rel="stylesheet" href="css/description.css">
 </head>
 <body>
+<div class="header">
+    <h2>Complex Fractal Generator</h2>
+</div>
     <div id="canvas-parent">
         <div class="main-container">
-            <div class="header">
-                <h1>Complex Fractal Generator</h1>
-            </div>
-            <a href="simple_fractal.html" class="button">Explore Simple Fractals</a>
             <div class="description-container">
                 <h2>Description</h2>
+                <br>
                 <p>Welcome to the Fractal Viewer! This program allows you to explore and visualize complex fractal
-                    patterns, including the Mandelbrot and Julia sets. Use the controls to customize the resolution and
+                    patterns, including the Mandelbrot (left) and Julia sets (right). Use the controls to customize the resolution and
                     color scheme for each fractal, and then press "Draw" to generate the fractal on the canvas.</p>
             <br>
                     <p>In fractal exploration, the Mandelbrot set serves as a map of the Julia sets. By clicking on a
@@ -32,7 +32,7 @@
                     <p><strong>Color Scheme:</strong> Select a color scheme for the fractal visualization. The available options include:</p>
                     <ul>
                         <li><strong>Warp:</strong> Allows you to choose a single color for the fractal. Click the box next to the warp option to select your desired color.</li>
-                        <li><strong>LCH:</strong> Utilizes the LCH (Lightness, Chroma, Hue) color space, which is designed to model human perception of color, making it ideal for UI design and color palettes. <a href="https://atmos.style/blog/lch-color-space" target="_blank">Learn more about LCH color space</a>.</li>
+                        <li><strong>LCH:</strong> Utilizes the LCH (Lightness, Chroma, Hue) color space, which is designed to model human perception of color, making it ideal for UI design and color palettes.</a>.</li>
                         <li><strong>Red/Black:</strong> Displays the fractal with a red background and black for the in-set regions.</li>
                     </ul>
 
@@ -40,8 +40,15 @@
 
                 <p>Experiment with different settings to discover beautiful and intricate fractal patterns. Enjoy exploring!</p>
             </div>
-        </div>
+            <div class="link">
+            <a href="simple_fractal.html" class="button">Explore Simple Fractals</a></div>
+            </div>
         <div class="canvas_mandel">
+            <div class="canvas-wrapper">
+                <div class="canvas-container" id="mandelbrot_container_id">
+                    <canvas id="mandelbrotCanvas"></canvas>
+                </div>
+            </div>
             <div type="controls">
                 <button class="button-59" role="button" id="drawMandelbrot">Draw</button>
                 <div class="input_class">
@@ -66,14 +73,16 @@
                     <label for="c1" id="warpColorLabelMandel" class="InputLabel" style="display: none;"></label>
                     <input type="color" id="c1" name="c1" value="#FF0000" style="display: none;">
                 </div>
-            <div class="canvas-wrapper">
-                <div class="canvas-container" id="mandelbrot_container_id">
-                    <canvas id="mandelbrotCanvas"></canvas>
-                </div>
-            </div>
         </div>
 
         <div class="canvas_julia">
+
+            <div class="canvas-wrapper">
+                <div class="canvas-container" id="julia_container_id">
+                    <canvas id="juliaCanvas"></canvas>
+                </div>
+
+            </div>
             <div type="controls">
                 <button class="button-59" role="button" id="drawJulia">Draw</button>
                 <div class="input_class">
@@ -98,14 +107,9 @@
                 <label for="c2" id="warpColorLabelJulia" class="InputLabel" style="display: none;"></label>
                 <input type="color" id="c2" name="c2" value="#FF0000" style="display: none;">
             </div>
-            <div class="canvas-wrapper">
-                <div class="canvas-container" id="julia_container_id">
-                    <canvas id="juliaCanvas"></canvas>
-                </div>
-                <div class="complex-number-display" id="juliaComplexNumber">
+            <div class="complex-number-display" id="juliaComplexNumber">
                     <p>Current Complex Number: (-0.8, 0.156)</p>
                 </div>
-            </div>
         </div>
     </div>
 

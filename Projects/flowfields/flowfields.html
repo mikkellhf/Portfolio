@@ -11,46 +11,69 @@
     <link rel="stylesheet" href="css/description.css" />
 </head>
 <body>
+<div class="header">
+    <h2>Welcome to the Fractal Explorer</h2>
+</div>
+
+   <div id="canvas-parent">
+       <div class="container">
+            <div class="description-container">
+                <h2>Description</h2>
+                <br>
+                <p>
+                    This visualization divides the canvas into a grid of sections. Each section receives a unique random value
+                    which directs the movement of particles passing through it. The extent of randomness or variation between
+                    each section is controlled by an input value termed as 'noise'.
+                </p>
+                <br>
+                <p>
+                    A higher noise value results in greater
+                    randomness, making each section distinct from the adjacent ones. The particles navigate based on these
+                    random section values, creating dynamic and unpredictable movement patterns.
+                </p>
+                <br>
+                <p>
+                    The "underlying flow field" displays the vectors (the lines) that determines how the particles direction are affected.
+                </p>
+                <pr>
+                The "flow field" displays the patterns that emerge when the particles movement is traced.
+                </pr>
+            </div>
+        </div>
 
 
-    <div class="canvas-container" id="canvas_container_id">
-        <canvas id="myCanvas" ></canvas>
-    </div>
-    <div class="script_controls">
-        <button class="button-59" role="button" onclick="loadScript('js/simple_flowfield.js')">Underlying Flowfield</button>
-        <button class="button-59" role="button" onclick="loadScript('js/flowfield.js')">Flowfield</button>
-    </div>
-    <div class="controls">
-        <div class="input_class">
-            <label class="InputLabel" for="noiseInput">Noise Level</label>
-            <input class="input_59" type="number" id="noiseInput" value="1" min="0" max="100">
+        <div class="canvas-container" id="canvas_container_id">
+
+            <canvas id="myCanvas" ></canvas>
         </div>
-        <br>
-        <div class="input_class">
-            <label class="InputLabel" for="numParticles">Number of Particles</label>
-            <input class="input_59" type="number" id="numParticles" value="1000" min="1">
+
+        <div class="controls">
+                <button class="button-59" role="button" onclick="loadScript('js/simple_flowfield.js')">Underlying Flow Field</button>
+                <button class="button-59" role="button" onclick="loadScript('js/flowfield.js')">Flow Field</button>
+            <br>
+            <div class="input_class">
+                <label class="InputLabel" for="noiseInput">Noise Level</label>
+                <input class="input_59" type="number" id="noiseInput" value="1" min="0" max="100">
+            </div>
+            <br>
+            <div class="input_class">
+                <label class="InputLabel" for="numParticles">Number of Particles</label>
+                <input class="input_59" type="number" id="numParticles" value="1000" min="1">
+            </div>
+            <br>
+             <div class="input_class">
+                <label class="InputLabel" for="speedInput">Speed Modifier</label>
+                <input class="input_59" type="number" id="speedInput" value="1" min="1">
+            </div>
+            <br>
+            <div class="input_class">
+                <label class="InputLabel" for="cellSize" >Cell Size</label>
+                <input class="input_59" type="number" id="cellSize" value="50" min="40" max="500">
+            </div>
         </div>
-        <br>
-         <div class="input_class">
-            <label class="InputLabel" for="speedInput">Speed Modifier</label>
-            <input class="input_59" type="number" id="speedInput" value="1" min="1">
-        </div>
-        <br>
-        <div class="input_class">
-            <label class="InputLabel" for="cellSize" >Cell Size</label>
-            <input class="input_59" type="number" id="cellSize" value="50" min="40" max="500">
-        </div>
-    </div>
-    <div class="container">
-        <div class="description-container">
-            <h2>Description</h2>
-            <p>This visualization divides the canvas into a grid of sections. Each section receives a unique random value
-                which directs the movement of particles passing through it. The extent of randomness or variation between
-                each section is controlled by an input value termed as 'noise'. A higher noise value results in greater
-                randomness, making each section distinct from the adjacent ones. The particles navigate based on these
-                random section values, creating dynamic and unpredictable movement patterns..</p>
-        </div>
-    </div>
+
+   </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
     <script> // Function to dynamically load a JavaScript file
@@ -64,25 +87,29 @@
 
                 if (scriptName === currentScriptName) {
                     console.log("Same script");
-                    return; // If the script is already loaded, do nothing
+                    return;
                 }
                 if (window.cleanupFlowfields) {
                     window.cleanupFlowfields();
                 }
-                existingScript.remove(); // Remove the existing script
+                existingScript.remove();
 
             }
-
             // Create a new script element
             const script = document.createElement('script');
             script.src = scriptName;
             script.id = 'flowfield-script';
-            document.body.appendChild(script); // Add the script to the body
+            document.body.appendChild(script);
+
+
+
+
+
         }
 
     // Run on window load
     window.onload = () => {
-        loadScript('js/flowfield.js'); // Load the default script on load
+        loadScript('js/flowfield.js');
     };
 
     </script>

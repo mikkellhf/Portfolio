@@ -1,28 +1,26 @@
 .main-container {
-    padding-top: 4%; /* Shifts entire layout down by 15px */
-    height: 100vh; /* Ensures the main container takes the full viewport height */
+    height: 85%; /* Ensures the main container takes the full viewport height */
     box-sizing: border-box;
 }
 
 
 
 .description-container {
-    height:550px;
-    width: 25vw;
+    width: 100%; /* Width of canvas container */
+    height:100%;
+    font-family: Inter, sans-serif;
 
     text-align: left;
 
     padding: 8px;
-    margin-top:5%;
     overflow-y: auto;
 
     background-color: #f0f0f0;
     border: 3px solid #1e1e1e;
-    border-radius: 8px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
 
-    transform: translateY(6%); /* Moves the description down */
 }
 .description-container-simple {
     height:600px;
@@ -46,6 +44,16 @@
 
 
 .header {
-    text-align:center;
+    text-align:left;
+    margin-top: 2%;
+    margin-right:55%;
+    font-size: 30px;
+    font-family: Inter, sans-serif;
+}
+.link {
+    text-align:left;
+    margin-top: 2%;
+    font-size: 25px;
+    font-family: Inter, sans-serif;
 }
 

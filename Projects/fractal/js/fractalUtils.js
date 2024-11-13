@@ -2,7 +2,7 @@ import {
     getColor
 } from './colorUtils.js';
 
-const baseMaxIterations = 2300; // Base maximum iterations, can adjust for starting detail level
+const baseMaxIterations = 2000; // Base maximum iterations, can adjust for starting detail level
 const thresholdSquared = 10;
 
 /**

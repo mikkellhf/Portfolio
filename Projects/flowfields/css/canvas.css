@@ -1,13 +1,16 @@
 .canvas-container {
-    position: absolute; /* Allows positioning of canvas */
     height: 500px;
     aspect-ratio: 1 / 1;
-    top:18%;
     border-top: 3px solid #1e1e1e;
     border-bottom: 3px solid #1e1e1e;
     border-right: 3px solid #1e1e1e;
     border-left: 3px solid #1e1e1e;
     background-color: white; /* Optional: Background color for the container */
+    border-radius: 5px;
+    margin-right:50px;
+    margin-left:50px;
+    align-content: center;
+
 }
 
 canvas {
@@ -15,4 +18,12 @@ canvas {
     background-color: white; /* Optional: Background color for the canvas */
     width: 99.99%;
 
+}
+#canvas-parent {
+    display: flex;
+    flex-direction: row;
+    height: 95%;
+    width: 100%;
+    pointer-events: auto;
+    margin-top:5%;
 }
