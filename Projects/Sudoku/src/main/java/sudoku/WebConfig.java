@@ -16,6 +16,7 @@ public class WebConfig {
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("https://mikkellhf.github.io/")
+                        .allowedOrigins("http://localhost:63342/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
             }
         };

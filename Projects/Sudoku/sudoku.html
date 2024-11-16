@@ -3,27 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spring Boot Backend Integration</title>
+  <title>MineSweeper - Select Difficulty</title>
+  <link rel="stylesheet" href="minesweeper.css">
 </head>
 <body>
-  <h1>Welcome to GitHub Pages!</h1>
-  <p id="response">Loading...</p>
+  <h1>MineSweeper Game</h1>
+  <div id="stats">
+    <p id="flagCount">Flags: 0 / 0</p>
+    <p id="message"></p>
+  </div>
+  <label for="difficulty">Select Difficulty:</label>
+  <select id="difficulty">
+    <option value="1" selected>Easy</option>
+    <option value="2">Medium</option>
+    <option value="3">Hard</option>
+  </select>
+  <div id="board"></div>
+  <button id="generateBoard">Generate Board</button>
 
-  <script>
-    // Replace this with your Spring Boot application's URL
+
+  <script type="module">
+    import { displayBoard } from './displayboard.js';
+
     const backendUrl = "https://sudoku-589270754733.europe-central2.run.app/";
 
-    // Fetch data from your Spring Boot backend
-    fetch(backendUrl)
-      .then(response => response.text())
-      .then(data => {
-        // Display the backend response
-        document.getElementById('response').innerText = data;
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        document.getElementById('response').innerText = "Error loading data.";
-      });
+    document.getElementById('generateBoard').addEventListener('click', () => {
+      const difficulty = document.getElementById('difficulty').value;
+
+      fetch(`${backendUrl}generateBoard?difficulty=${difficulty}`)
+        .then((response) => response.text())
+        .then((data) => displayBoard(data)) // Use the displayBoard function
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+          document.getElementById('board').innerText = "Error loading board.";
+        });
+    });
   </script>
 </body>
 </html>
