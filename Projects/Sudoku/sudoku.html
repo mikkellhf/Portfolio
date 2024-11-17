@@ -8,47 +8,36 @@
 </head>
 <body>
   <h1>MineSweeper Game</h1>
-  <div id="stats">
-    <p id="flagCount">Flags: 0 / 0</p>
-    <p id="message"></p>
+  <div id="gameControls">
+    <div id="stats">
+      <div id="flagDisplay">
+        <p><strong>Flags: <span id="flagCount">0</span> / <span id="totalBombs">0</span></strong></p>
+      </div>
+      <div id="messages">
+        <p id="message"></p>
+      </div>
+    </div>
+    <label for="difficulty">Select Difficulty:</label>
+    <select id="difficulty">
+      <option value="1" selected>Easy</option>
+      <option value="2">Medium</option>
+      <option value="3">Hard</option>
+    </select>
+    <button id="generateBoard">Generate Board</button>
   </div>
-  <label for="difficulty">Select Difficulty:</label>
-  <select id="difficulty">
-    <option value="1" selected>Easy</option>
-    <option value="2">Medium</option>
-    <option value="3">Hard</option>
-  </select>
-  <div id="board"></div>
-  <button id="generateBoard">Generate Board</button>
+  <div id="boardContainer">
+    <div id="board"></div>
+  </div>
 
   <script type="module">
-    import { displayBoard } from './displayboard.js';
+    import { generateBoard } from './MineSweeperLogic.js';
 
-    const backendUrl = "https://sudoku-589270754733.europe-central2.run.app/";
-
-    document.getElementById('generateBoard').addEventListener('click', async () => {
+    document.getElementById('generateBoard').addEventListener('click', () => {
       const difficulty = document.getElementById('difficulty').value;
-
-      const boardContainer = document.getElementById('board');
-      boardContainer.innerText = "Loading board..."; // Feedback while loading
-
-      try {
-        const response = await fetch(`${backendUrl}generateBoard?difficulty=${difficulty}`);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        // Parse the response as an ArrayBuffer
-        const arrayBuffer = await response.arrayBuffer();
-        const byteArray = new Uint8Array(arrayBuffer); // Convert to Uint8Array
-
-        displayBoard(byteArray); // Use the displayBoard function with the byte array
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        boardContainer.innerText = "Error loading board.";
-      }
+      generateBoard(difficulty);
     });
+    const difficulty = document.getElementById('difficulty').value;
+    generateBoard(difficulty);
   </script>
 </body>
 </html>
