@@ -1,60 +1,37 @@
-import { MinesweeperLogic } from './minesweeperLogic.js';
-
-let game; // To store the MinesweeperLogic instance
-
-export function displayBoard(boardString) {
-    game = new MinesweeperLogic(boardString); // Initialize the game logic
-    renderBoard(game.getDisplayBoard()); // Render the initial board
-    updateFlagCount(); // Update the flag count display
-
-}
-
-function renderBoard(displayBoard) {
+export function displayBoard(byteArray) {
   const boardContainer = document.getElementById('board');
-  boardContainer.innerHTML = ''; // Clear the existing board
+  boardContainer.innerHTML = ''; // Clear existing board
 
-  displayBoard.forEach((row, rowIndex) => {
+  const height = byteArray[0];
+  const width = byteArray[1];
+  const boardData = byteArray.slice(2); // Extract the grid data
+
+  for (let row = 0; row < height; row++) {
     const rowElement = document.createElement('div');
     rowElement.classList.add('row');
 
-    row.forEach((cell, colIndex) => {
+    for (let col = 0; col < width; col++) {
+      const index = row * width + col;
+      const cellData = boardData[index];
+      const isRevealed = (cellData & 0b00010000) !== 0; // Bit 4 indicates revealed
+      const content = cellData & 0b00001111; // Bits 0–3 for bombs/count
+
       const cellElement = document.createElement('div');
       cellElement.classList.add('cell');
 
-      // Display the cell content only if revealed or flagged
-      cellElement.textContent = cell;
-
-      // Add classes for flagged cells
-      if (game.flags[rowIndex][colIndex]) {
-        cellElement.classList.add('flagged');
+      // Display content if revealed
+      if (isRevealed) {
+        cellElement.textContent = content;
       }
 
-      // Attach a left-click event listener to reveal cells
-      cellElement.addEventListener('click', () => {
-        if (!game.flags[rowIndex][colIndex]) { // Only reveal if not flagged
-          game.revealCell(rowIndex, colIndex);
-          renderBoard(game.getDisplayBoard());
-          updateFlagCount();
-        }
-        if (game.checkWin()) {
-          document.getElementById('message').innerText = 'Congratulations, You Won!';
-        }
-      });
-
-      // Attach a right-click event listener to toggle flags
-      cellElement.addEventListener('contextmenu', (event) => {
-        event.preventDefault(); // Prevent the default context menu
-        game.toggleFlag(rowIndex, colIndex);
-        renderBoard(game.getDisplayBoard());
-      });
+      // Add flagged appearance (server-side logic should include flag state in the byte array if needed)
+      if ((cellData & 0b00100000) !== 0) {
+        cellElement.textContent = 'B';
+      }
 
       rowElement.appendChild(cellElement);
-    });
+    }
 
     boardContainer.appendChild(rowElement);
-  });
-}
-function updateFlagCount() {
-  const flaggedCount = game.getFlaggedCount();
-  document.getElementById('flagCount').innerText = `Flags: ${flaggedCount} / ${game.totalBombs}`;
+  }
 }
