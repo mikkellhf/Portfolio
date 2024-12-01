@@ -1,0 +1,162 @@
+/* General grid container styling */
+#board {
+  display: grid;
+  border-top: 4px solid #bcbcbc;
+  border-left: 4px solid #bcbcbc;
+  border-right: 3px solid #bcbcbc;
+  border-bottom: 3px solid #bcbcbc;
+  border-radius: 5px;
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+/* Row styling (not necessary if using grid layout for #board) */
+.row {
+  display: flex; /* Optional if #board is not using grid layout */
+}
+
+
+
+
+/* Bomb cell */
+.cell.bomb {
+  background-color: #ff6b6b;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Number cells */
+.cell.num-1 {
+  color: #3c00f9;
+}
+
+.cell.num-2 {
+  color: #007b10;
+}
+
+.cell.num-3 {
+  color: #fa2a1b;
+}
+
+.cell.num-4 {
+  color: #180078;
+}
+
+.cell.num-5 {
+  color: #6610f2;
+}
+
+.cell.num-6 {
+  color: #20c997;
+}
+
+.cell.num-7 {
+  color: #17a2b8;
+}
+
+.cell.num-8 {
+  color: #6c757d;
+}
+
+
+
+/* Board title styling */
+h1 {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #343a40;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .cell {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #adb5bd;
+  background-color: #e9ecef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #495057;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
+.cell:hover {
+  background-color: #dee2e6;
+}
+
+.cell.blank {
+    background-color: #eee;
+    cursor: pointer;
+    border: 2px solid #fdfdfd;
+    border-right-color: #adb5bd;
+    border-bottom-color: #adb5bd;
+    width: 28px;
+    height: 28px;
+}
+
+.cell.flagged {
+    background-color: #eee;
+    cursor: pointer;
+    border: 2px solid #fdfdfd;
+    border-right-color: #adb5bd;
+    border-bottom-color: #adb5bd;
+    width: 28px;
+    height: 28px;
+}
+
+.cell.revealed {
+      background-color: #ddd;
+}
+
+.cell.revealed-bomb {
+      background-color: #fa2a1b;
+}
+
+
+
+
+
+.
+

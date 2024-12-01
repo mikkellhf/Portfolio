@@ -3,27 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spring Boot Backend Integration</title>
+  <title>MineSweeper - Select Difficulty</title>
+  <link rel="stylesheet" href="minesweeper.css">
 </head>
 <body>
-  <h1>Welcome to GitHub Pages!</h1>
-  <p id="response">Loading...</p>
+  <h1>MineSweeper Game</h1>
+  <div id="gameControls">
+    <div id="stats">
+      <div id="flagDisplay">
+        <p><strong>Flags: <span id="flagCount">0</span> / <span id="totalBombs">0</span></strong></p>
+      </div>
+      <div id="messages">
+        <p id="message"></p>
+      </div>
+    </div>
+    <label for="difficulty">Select Difficulty:</label>
+    <select id="difficulty">
+      <option value="1" selected>Easy</option>
+      <option value="2">Medium</option>
+      <option value="3">Hard</option>
+    </select>
+    <button id="generateBoard">Generate Board</button>
+  </div>
+  <div id="boardContainer">
+    <div id="board"></div>
+  </div>
 
-  <script>
-    // Replace this with your Spring Boot application's URL
-    const backendUrl = "https://sudoku-589270754733.europe-central2.run.app/";
+  <script type="module">
+    import { generateBoard } from './MineSweeperLogic.js';
 
-    // Fetch data from your Spring Boot backend
-    fetch(backendUrl)
-      .then(response => response.text())
-      .then(data => {
-        // Display the backend response
-        document.getElementById('response').innerText = data;
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        document.getElementById('response').innerText = "Error loading data.";
-      });
+    document.getElementById('generateBoard').addEventListener('click', () => {
+      const difficulty = document.getElementById('difficulty').value;
+      generateBoard(difficulty);
+    });
+    const difficulty = document.getElementById('difficulty').value;
+    generateBoard(difficulty);
   </script>
 </body>
 </html>
